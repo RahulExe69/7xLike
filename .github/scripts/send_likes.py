@@ -15,7 +15,7 @@ logger = logging.getLogger("github_like_sender")
 
 # UIDs to send likes to
 USERS_TO_LIKE = [
-    {"uid": "651948621", "server_name": "IND"},
+    {"uid": "651948622", "server_name": "IND"},
     {"uid": "661067880", "server_name": "IND"}
 ]
 
