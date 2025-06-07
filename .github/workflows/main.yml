@@ -22,8 +22,20 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests pytz
+        pip install requests pytz beautifulsoup4
         
-    - name: Run Like Sender
+    - name: Run Like Sender and Generate Logs
       run: |
         python .github/scripts/send_likes.py
+        
+    - name: Update logs page
+      run: |
+        python .github/scripts/update_logs.py
+        
+    - name: Commit and push if logs changed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add logs.html
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update logs with latest run data [skip ci]"
+        git push
