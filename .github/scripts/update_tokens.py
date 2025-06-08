@@ -62,9 +62,16 @@ def update_tokens():
     logger.info(f"Starting token update at {current_time}")
     
     try:
-        # Read accounts from accounts.json
-        with open('accounts.json', 'r') as f:
-            accounts = json.load(f)
+        # Read accounts from environment variable or fallback to file
+        if 'ACCOUNTS_JSON' in os.environ:
+            accounts_json = os.environ.get('ACCOUNTS_JSON')
+            accounts = json.loads(accounts_json)
+            logger.info("Using accounts from environment variables")
+        else:
+            # Fallback to file-based approach
+            with open('accounts.json', 'r') as f:
+                accounts = json.load(f)
+            logger.info("Using accounts from accounts.json file")
         
         logger.info(f"Found {len(accounts)} accounts to update")
         
@@ -92,6 +99,7 @@ def update_tokens():
             
     except Exception as e:
         logger.error(f"Error during token update process: {str(e)}")
+        raise e  # Rethrow the exception to ensure workflow fails
 
 if __name__ == "__main__":
     update_tokens()
