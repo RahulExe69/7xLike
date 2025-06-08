@@ -32,7 +32,20 @@ def get_new_token(account):
         response = requests.get(url, timeout=REQUEST_TIMEOUT)
         
         if response.status_code == 200:
-            token = response.text.strip()
+            # Parse the response to extract just the JWT token
+            try:
+                # First, try to parse it as JSON to see if it contains a token field
+                response_data = response.json()
+                if isinstance(response_data, dict) and "token" in response_data:
+                    # Extract just the token value from JSON
+                    token = response_data["token"]
+                else:
+                    # If it's not a dict with token field, use the raw text
+                    token = response.text.strip()
+            except:
+                # If JSON parsing fails, use the raw text
+                token = response.text.strip()
+                
             logger.info(f"Successfully generated token for UID: {uid}")
             return {"uid": uid, "token": token}
         else:
