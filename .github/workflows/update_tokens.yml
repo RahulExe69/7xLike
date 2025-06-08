@@ -6,6 +6,10 @@ on:
     - cron: '0 23 * * *'
   workflow_dispatch:  # For manual triggering
 
+# Add explicit permissions - this is critical
+permissions:
+  contents: write
+
 jobs:
   update-tokens:
     runs-on: ubuntu-latest
@@ -14,7 +18,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
         
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -31,41 +35,31 @@ jobs:
         ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
       run: |
         python .github/scripts/update_tokens.py
-
-    - name: Push changes directly to GitHub API
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const fs = require('fs');
+        
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        
+        # Check if token file exists and was updated
+        if [ -f token_ind.json ]; then
+          git add token_ind.json
           
-          // Read the updated token file
-          const tokenContent = fs.readFileSync('token_ind.json', 'utf8');
-          
-          // Get the current file to get its SHA
-          try {
-            const { data: currentFile } = await github.rest.repos.getContent({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              path: 'token_ind.json',
-            });
+          # Only commit if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "Update JWT tokens [skip ci]"
             
-            // Update the file through the GitHub API
-            await github.rest.repos.createOrUpdateFileContents({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              path: 'token_ind.json',
-              message: 'Update JWT tokens [skip ci]',
-              content: Buffer.from(tokenContent).toString('base64'),
-              sha: currentFile.sha,
-              committer: {
-                name: 'GitHub Actions Bot',
-                email: 'actions@github.com'
-              }
-            });
+            # Try to push, using PAT token if available
+            if [ -n "${{ secrets.PAT_TOKEN }}" ]; then
+              git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
+            fi
             
-            console.log('Successfully updated token_ind.json through GitHub API');
-          } catch (error) {
-            console.error('Error updating file:', error);
-            process.exit(1);
-          }
+            git push
+            echo "Successfully pushed token updates"
+          else
+            echo "No changes detected in token_ind.json"
+          fi
+        else
+          echo "Error: token_ind.json not found"
+          exit 1
+        fi
