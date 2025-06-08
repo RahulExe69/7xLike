@@ -3,7 +3,7 @@ name: Daily Free Fire Likes
 on:
   schedule:
     # Run at 5:00 AM Indian time (UTC+5:30) which is 11:30 PM UTC
-    - cron: '30 23 * * *'
+    - cron: '30 16 * * *'
   workflow_dispatch:  # This allows manual triggering if needed
 
 # Add this permissions block
