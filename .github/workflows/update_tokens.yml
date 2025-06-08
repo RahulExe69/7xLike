@@ -14,7 +14,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.PAT_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -27,13 +27,15 @@ jobs:
         pip install requests pytz
         
     - name: Update JWT tokens
+      env:
+        ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
       run: |
         python .github/scripts/update_tokens.py
 
     - name: Push changes directly to GitHub API
       uses: actions/github-script@v6
       with:
-        github-token: ${{ secrets.PAT_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const fs = require('fs');
           
@@ -41,24 +43,29 @@ jobs:
           const tokenContent = fs.readFileSync('token_ind.json', 'utf8');
           
           // Get the current file to get its SHA
-          const { data: currentFile } = await github.rest.repos.getContent({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            path: 'token_ind.json',
-          });
-          
-          // Update the file through the GitHub API
-          await github.rest.repos.createOrUpdateFileContents({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            path: 'token_ind.json',
-            message: 'Update JWT tokens [skip ci]',
-            content: Buffer.from(tokenContent).toString('base64'),
-            sha: currentFile.sha,
-            committer: {
-              name: 'GitHub Actions Bot',
-              email: 'actions@github.com'
-            }
-          });
-          
-          console.log('Successfully updated token_ind.json through GitHub API');
+          try {
+            const { data: currentFile } = await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: 'token_ind.json',
+            });
+            
+            // Update the file through the GitHub API
+            await github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: 'token_ind.json',
+              message: 'Update JWT tokens [skip ci]',
+              content: Buffer.from(tokenContent).toString('base64'),
+              sha: currentFile.sha,
+              committer: {
+                name: 'GitHub Actions Bot',
+                email: 'actions@github.com'
+              }
+            });
+            
+            console.log('Successfully updated token_ind.json through GitHub API');
+          } catch (error) {
+            console.error('Error updating file:', error);
+            process.exit(1);
+          }
