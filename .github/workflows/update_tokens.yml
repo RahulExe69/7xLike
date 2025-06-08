@@ -17,8 +17,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # Fetch all history to avoid conflicts
-      
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -33,13 +33,44 @@ jobs:
       run: |
         python .github/scripts/update_tokens.py
         
-    - name: Commit and push if tokens changed
+    - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         
-        # Pull latest changes before attempting to push
+        # Stage only the token file
+        git add token_ind.json
+        
+        # Only proceed if there are changes
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+        
+        # Try to commit and push, retry with force if needed
+        git commit -m "Update JWT tokens [skip ci]"
+        
+        # First attempt - normal push
+        if git push; then
+          echo "Successfully pushed changes"
+          exit 0
+        fi
+        
+        # If normal push fails, pull with --rebase and try again
+        echo "Push failed, trying pull and rebase..."
         git pull --rebase origin main
         
+        # Second attempt - after rebase
+        if git push; then
+          echo "Successfully pushed changes after rebase"
+          exit 0
+        fi
+        
+        # Last resort - force push the token file only
+        echo "Rebase failed, using more aggressive strategy..."
+        git checkout --orphan temp-branch
         git add token_ind.json
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update JWT tokens [skip ci]" && git push)
+        git commit -m "Update JWT tokens [skip ci]"
+        git push -f origin temp-branch:main
