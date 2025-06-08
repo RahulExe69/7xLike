@@ -2,9 +2,8 @@ name: Daily Token Update
 
 on:
   schedule:
-    # Run at 4:30 AM Indian time (UTC+5:30) which is 11:00 PM UTC
-    - cron: '0 23 * * *'
-  workflow_dispatch:  # For manual triggering
+    - cron: '0 23 * * *'  # 11:00 PM UTC / 4:30 AM IST
+  workflow_dispatch:
 
 jobs:
   update-tokens:
@@ -27,6 +26,8 @@ jobs:
         pip install requests pytz
         
     - name: Update JWT tokens
+      env:
+        ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
       run: |
         python .github/scripts/update_tokens.py
 
