@@ -6,7 +6,7 @@ on:
     - cron: '0 23 * * *'
   workflow_dispatch:  # For manual triggering
 
-# Add explicit permissions - this is critical
+# This is crucial - explicitly declare permissions
 permissions:
   contents: write
 
@@ -18,6 +18,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
+        # If you have a PAT_TOKEN secret, use it, otherwise use GITHUB_TOKEN
         token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
         
     - name: Set up Python
@@ -32,34 +33,29 @@ jobs:
         
     - name: Update JWT tokens
       env:
+        # Pass credentials securely through environment variable if defined
         ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
       run: |
         python .github/scripts/update_tokens.py
         
     - name: Commit and push changes
+      # This script handles everything with basic git commands
       run: |
+        # Configure git
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         
-        # Check if token file exists and was updated
-        if [ -f token_ind.json ]; then
-          git add token_ind.json
-          
-          # Only commit if there are changes
-          if ! git diff --staged --quiet; then
-            git commit -m "Update JWT tokens [skip ci]"
-            
-            # Try to push, using PAT token if available
-            if [ -n "${{ secrets.PAT_TOKEN }}" ]; then
-              git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
-            fi
-            
-            git push
-            echo "Successfully pushed token updates"
-          else
-            echo "No changes detected in token_ind.json"
-          fi
-        else
-          echo "Error: token_ind.json not found"
-          exit 1
+        # Stage only the token file
+        git add token_ind.json
+        
+        # Check if there are changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+          exit 0
         fi
+        
+        # Commit changes with a skip CI message
+        git commit -m "Update JWT tokens [skip ci]"
+        
+        # Push changes
+        git push
