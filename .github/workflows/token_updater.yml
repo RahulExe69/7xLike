@@ -2,8 +2,12 @@ name: Token Updater
 
 on:
   schedule:
+    # Run at 4:30 AM Indian time (UTC+5:30) which is 11:00 PM UTC
     - cron: '0 23 * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # For manual triggering
+
+permissions:
+  contents: write
 
 jobs:
   update-tokens:
@@ -20,13 +24,6 @@ jobs:
       with:
         python-version: '3.9'
         
-    - name: Debug Information
-      run: |
-        echo "Repository: ${{ github.repository }}"
-        echo "PAT_TOKEN available: ${{ secrets.PAT_TOKEN != '' }}"
-        echo "ACCOUNTS_JSON available: ${{ secrets.ACCOUNTS_JSON != '' }}"
-        git config --list
-        
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -39,35 +36,26 @@ jobs:
         python .github/scripts/update_tokens.py
         
     - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       run: |
         # Configure git
-        git config --global user.name 'RahulExe69'
-        git config --global user.email 'actions@github.com'
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         
-        # Debug token file
-        echo "Token file exists: $(test -f token_ind.json && echo 'Yes' || echo 'No')"
-        
-        # Add and commit only the token file
+        # Add the token file
         git add token_ind.json
         
-        # Debug git status
-        git status
-        
-        # Only commit if there are changes
+        # Check if there are changes to commit
         if git diff --staged --quiet; then
           echo "No changes to commit"
-          exit 0
         else
+          # Commit changes
           git commit -m "Update JWT tokens [skip ci]"
           
-          # Use explicit URL with PAT_TOKEN
-          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
-          
-          # Debug remote URL (with token redacted)
-          git remote -v | sed 's/https:\/\/.*@/https:\/\/***@/'
-          
-          # Push with verbose output
-          git push -v
+          # Push using the PAT_TOKEN
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/RahulExe69/7xLike.git
+          git push
           
           echo "Successfully pushed token updates"
         fi
