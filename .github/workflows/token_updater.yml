@@ -3,7 +3,7 @@ name: Token Updater
 on:
   schedule:
     # Run at 4:30 AM Indian time (UTC+5:30) which is 11:00 PM UTC
-    - cron: '0 23 * * *'
+    - cron: '0 16 * * *'
   workflow_dispatch:  # For manual triggering
 
 permissions:
