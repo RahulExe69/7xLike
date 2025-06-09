@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>7xLike Free Fire Activity Logs</title>
-  <!-- Free Fire style colors/fonts: -->
+  <!-- Free Fire style colors/fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -26,12 +25,10 @@
       letter-spacing: 2px;
       border-bottom: 3px solid #FFD700;
     }
-    .navbar .brand {
-      font-size: 1.5em;
-    }
+    .navbar .brand { font-size: 1.5em; }
     .navbar .manual-btn {
-      background: #FFD700;
-      color: #181920;
+      background: #FF4500;
+      color: #fff;
       font-weight: bold;
       border: none;
       border-radius: 7px;
@@ -41,115 +38,29 @@
       box-shadow: 1px 1px 5px #0006;
       transition: background .2s;
     }
-    .navbar .manual-btn:hover {
-      background: #ffa600;
-    }
+    .navbar .manual-btn:hover { background: #e63e00; }
     .container {
       max-width: 600px;
       margin: 1.5em auto;
       background: rgba(20,22,30,.89);
       border-radius: 12px;
       box-shadow: 0 2px 18px #000a;
-      padding: 1.2em 1.2em 2em 1.2em;
+      padding: 1.2em;
     }
     .section-title {
-      color: #FFD700;
+      color: #FDFF00;
       text-align: left;
       font-size: 1.3em;
-      margin: 1.2em 0 0.6em 0;
-      border-left: 4px solid #FFD700;
+      margin: 1.2em 0 .6em;
+      border-left: 4px solid #FDFF00;
       padding-left: 8px;
       letter-spacing: 2px;
     }
-    .accordion {
-      margin: 0;
-    }
-    .accordion-day {
-      margin-bottom: 12px;
-    }
-    .accordion-day-btn {
-      background: #23263a;
-      font-family: inherit;
-      color: #FFD700;
-      border: none;
-      width: 100%;
-      text-align: left;
-      padding: 0.8em 1em;
-      font-size: 1.08em;
-      cursor: pointer;
-      border-radius: 7px 7px 0 0;
-      outline: none;
-      position: relative;
-      margin-bottom: 2px;
-      transition: background .18s;
-    }
-    .accordion-day-btn:hover { background: #282a43; }
-    .accordion-day-btn:after {
-      content: "▼";
-      float: right;
-      transition: transform .2s;
-    }
-    .accordion-day-btn[aria-expanded="true"]:after {
-      transform: rotate(-180deg);
-    }
-    .accordion-content {
-      display: none;
-      background: #242838;
-      padding: 0.7em 1.2em 0.9em 1.2em;
-      border-radius: 0 0 9px 9px;
-      box-shadow: 0 1px 8px #0003;
-      margin-bottom: 8px;
-    }
-    .accordion-content[aria-hidden="false"] {
-      display: block;
-    }
-    /* Each run-time log entry */
-    .run-log {
-      margin-bottom: 1em;
-      border-left: 3px solid #FFD700;
-      padding-left: 10px;
-      background: #1e2130;
-      border-radius: 7px;
-      padding-bottom: 0.7em;
-      box-shadow: 0 0 3px #0002;
-    }
-    .run-log-title {
-      font-size: 1.08em;
-      color: #FFD700;
-      margin-bottom: .3em;
-      margin-top: .7em;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-    /* Collapsible accounts log inside each run */
-    details.accounts-log {
-      background: #22242f;
-      color: #fff;
-      margin-bottom: 0.6em;
-      border-radius: 6px;
-      padding: 0.5em 0.7em;
-      box-shadow: 0 1px 6px #0003;
-    }
-    details.accounts-log summary {
-      font-size: 1em;
-      color: #FFD700;
-      cursor: pointer;
-      outline: none;
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-    .account-list {
-      margin-left: 1em;
-      margin-top: 0.3em;
-      font-size: 0.99em;
-    }
-    .account-success { color: #5CFF5C; }
-    .account-fail { color: #ff4343; }
-    /* Modal for manual send likes */
+    /* Modal styles */
     .modal-bg {
       display: none;
-      position: fixed; left: 0; top: 0;
-      width: 100vw; height: 100vh;
+      position: fixed;
+      inset: 0;
       background: #000a;
       z-index: 100;
       justify-content: center;
@@ -157,195 +68,121 @@
     }
     .modal-bg.active { display: flex; }
     .modal {
-      background: #242838;
+      background: rgba(30,30,30,0.95);
+      border: 2px solid #FFD700;
       border-radius: 12px;
-      padding: 2em 1.2em 1.6em 1.2em;
-      min-width: 290px;
-      box-shadow: 0 4px 22px #000b;
-      color: #FFD700;
+      padding: 1.5em;
+      width: 320px;
+      color: #fff;
       text-align: center;
-      font-size: 1.1em;
+      box-shadow: 0 4px 22px #000b;
       position: relative;
     }
-    .modal input, .modal button {
-      font-size: 1.05em;
-      padding: .5em .7em;
-      border-radius: 7px;
-      margin-top: 1em;
+    .modal h2 {
+      margin: 0;
+      font-size: 1.4em;
+      color: #FF4500;
+      text-shadow: 1px 1px 2px #000;
     }
     .modal input {
+      width: 90%;
+      padding: .6em;
+      margin: .8em 0;
       border: 1.5px solid #FFD700;
       background: #14141c;
       color: #FFD700;
-      width: 85%;
-      margin-bottom: .8em;
+      border-radius: 6px;
+      font-size: 1em;
       outline: none;
       font-family: inherit;
       text-align: center;
     }
     .modal button {
-      border: none;
       background: #FFD700;
-      color: #23263a;
-      font-weight: bold;
-      padding: .55em 2em;
-      cursor: pointer;
-      margin-right: .6em;
-      transition: background .17s;
-    }
-    .modal button:hover { background: #ffa600; }
-    .modal .close-btn {
-      background: #ff4343;
-      color: #fff;
-      position: absolute;
-      top: .6em; right: .8em;
-      padding: .28em .8em;
-      border-radius: 4px;
+      border: none;
+      padding: .6em 1.2em;
+      border-radius: 6px;
       font-size: 1em;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 2px #000;
+      transition: background .2s;
     }
-    @media (max-width: 700px) {
-      .container { max-width: 98vw; padding: 0.4em 0.2em 1em 0.2em; }
-      .navbar { font-size: 1em; }
-      .section-title { font-size: 1.1em; }
+    .modal button:hover { background: #ffda47; }
+    .modal .close-btn {
+      position: absolute;
+      top: .5em; right: .7em;
+      background: #ff4343;
+      border: none;
+      color: #fff;
+      padding: .3em .6em;
+      border-radius: 4px;
+      cursor: pointer;
     }
+    /* Result popup details */
+    .result-details {
+      text-align: left;
+      margin-top: .8em;
+      background: #23263a;
+      padding: .8em;
+      border-radius: 6px;
+      border: 1px solid #FFD700;
+    }
+    .result-details p { margin: .4em 0; line-height: 1.2; }
+    .error { color: #FF4365; font-weight: bold; }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <span class="brand">7xLike | Free Fire Logs</span>
-    <button class="manual-btn" onclick="openManualModal()">Send Likes</button>
+    <button class="manual-btn" onclick="openModal()">Send Likes</button>
   </nav>
   <div class="container">
     <div class="section-title">Recent Activity</div>
-    <div class="accordion" id="logsAccordion">
-      <!-- JS will inject log accordions here -->
+    <!-- existing logs accordion here -->
+  </div>  <!-- Modal: Send Likes -->  <div class="modal-bg" id="likeModal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h2>Send Likes</h2>
+      <input type="text" id="uidInput" placeholder="Enter Free Fire UID" required />
+      <button onclick="sendLikes()">Submit</button>
+      <div id="result" class="result-details" style="display:none;"></div>
     </div>
-  </div>
+  </div>  <script>
+    function openModal() {
+      document.getElementById('likeModal').classList.add('active');
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('uidInput').value = '';
+    }
+    function closeModal() { document.getElementById('likeModal').classList.remove('active'); }
 
-  <!-- MODAL: Manual Send Likes -->
-  <div class="modal-bg" id="manualModal">
-    <form class="modal" onsubmit="return sendLikesManually()">
-      <button class="close-btn" onclick="closeManualModal()" type="button">&times;</button>
-      <div style="font-size:1.25em;font-weight:bold;margin-bottom:.6em;">Send Likes Manually</div>
-      <input type="text" id="manualUid" placeholder="Enter Free Fire UID" required/>
-      <input type="number" id="manualAmount" placeholder="No. of Likes (default 1)" min="1" max="100"/>
-      <br/>
-      <button type="submit">Send</button>
-    </form>
-  </div>
-
-  <script>
-  // ---- Sample Data: Replace this with your real logs loader ----
-  // Grouped by date, each with a list of runs (each run has a time, and an accounts array)
-  const logsData = [
-    {
-      date: "2025-06-09",
-      runs: [
-        {
-          time: "22:17:20",
-          accounts: [
-            {uid: "651948621", nick: "BLACK FF EXE", likes: 99, before: 20616, after: 20715, status: "success"},
-            {uid: "661067880", nick: "BLADE FF EXE", likes: 99, before: 16823, after: 16922, status: "success"},
-            {uid: "1830656132", nick: "FREEDOM EXE", likes: 99, before: 4279, after: 4378, status: "success"},
-            {uid: "1322681052", nick: "BLAST FF EXE", likes: 99, before: 2756, after: 2855, status: "success"},
-            {uid: "1852957153", nick: "SWEETY FF", likes: 99, before: 3011, after: 3110, status: "success"},
-          ]
-        },
-        {
-          time: "17:44:03",
-          accounts: [
-            {uid: "651948621", nick: "BLACK FF EXE", likes: 0, before: 20614, after: 20614, status: "success"},
-            {uid: "661067880", nick: "BLADE FF EXE", likes: 0, before: 16817, after: 16817, status: "success"},
-            // ... (more accounts)
-          ]
+    async function sendLikes() {
+      const uid = document.getElementById('uidInput').value.trim();
+      if (!uid) return;
+      const api = `https://7x-like.vercel.app/like?uid=${uid}&server_name=ind`;
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'none';
+      try {
+        const res = await fetch(api);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const data = await res.json();
+        // Clear previous
+        resultDiv.innerHTML = '';
+        if (data.status === 2) {
+          resultDiv.innerHTML = `<p class="error">⚠️ Already received likes today.</p>`;
+        } else if (data.status === 1) {
+          resultDiv.innerHTML = `
+            <p>✔️ <strong>${data.PlayerNickname}</strong> (UID: ${data.UID})</p>
+            <p>Likes Given: ${data.LikesGivenByAPI}</p>
+            <p>Before: ${data.LikesbeforeCommand}</p>
+            <p>After: ${data.LikesafterCommand}</p>
+          `;
+        } else {
+          resultDiv.innerHTML = `<p class="error">Unexpected response status: ${data.status}</p>`;
         }
-      ]
-    },
-    {
-      date: "2025-06-08",
-      runs: [
-        {
-          time: "22:19:01",
-          accounts: [
-            {uid: "651948621", nick: "BLACK FF EXE", likes: 99, before: 20517, after: 20616, status: "success"},
-            // ...
-          ]
-        }
-      ]
+      } catch (err) {
+        resultDiv.innerHTML = `<p class="error">Error: ${err.message}</p>`;
+      }
+      resultDiv.style.display = 'block';
     }
-  ];
-  //---------------------------------------------------------------
-
-  // Render logs as accordion per day
-  function renderLogs(data) {
-    const logsAccordion = document.getElementById('logsAccordion');
-    logsAccordion.innerHTML = "";
-    data.forEach((day, idx) => {
-      const dayId = `day-${idx}`;
-      const isOpen = idx === 0 ? 'true' : 'false'; // open most recent by default
-      // Day button
-      const dayBtn = `<button class="accordion-day-btn" aria-expanded="${isOpen}" onclick="toggleAccordion('${dayId}')">${day.date}</button>`;
-      // Day content: each run time as collapsible details
-      const dayContent = `
-        <div class="accordion-content" id="${dayId}" aria-hidden="${!isOpen}">
-          ${day.runs.map(run => `
-            <div class="run-log">
-              <div class="run-log-title">Run Time: ${run.time}</div>
-              <details class="accounts-log">
-                <summary>Show Accounts (${run.accounts.length})</summary>
-                <div class="account-list">
-                  ${run.accounts.map(acc => `
-                    <div>
-                      <span class="${acc.status==='success'?'account-success':'account-fail'}">
-                        ${acc.status==='success'?'✔️':'❌'} UID: ${acc.uid} (${acc.nick}) : ${acc.status.charAt(0).toUpperCase()+acc.status.slice(1)}
-                      </span>
-                      <div style="font-size:.98em;">Likes: ${acc.likes} | Before: ${acc.before} | After: ${acc.after}</div>
-                    </div>
-                  `).join("")}
-                </div>
-              </details>
-            </div>
-          `).join("")}
-        </div>
-      `;
-      logsAccordion.innerHTML += `<div class="accordion-day">${dayBtn}${dayContent}</div>`;
-      if (isOpen === "true") document.body.onload = () => toggleAccordion(dayId, true);
-    });
-  }
-
-  function toggleAccordion(id, openFirst=false) {
-    const content = document.getElementById(id);
-    const btn = content.previousElementSibling;
-    const isNowOpen = content.getAttribute('aria-hidden') === 'false' ? false : true;
-    // Close all others
-    document.querySelectorAll('.accordion-content').forEach(c => {
-      c.setAttribute('aria-hidden','true');
-      c.previousElementSibling.setAttribute('aria-expanded','false');
-    });
-    if (isNowOpen || openFirst) {
-      content.setAttribute('aria-hidden','false');
-      btn.setAttribute('aria-expanded','true');
-    }
-  }
-
-  // Manual send likes modal logic
-  function openManualModal() { document.getElementById('manualModal').classList.add('active'); }
-  function closeManualModal() { document.getElementById('manualModal').classList.remove('active'); }
-  function sendLikesManually() {
-    const uid = document.getElementById('manualUid').value.trim();
-    const amount = document.getElementById('manualAmount').value || 1;
-    if (uid && amount > 0) {
-      alert(`(Demo) Sending ${amount} likes to UID: ${uid}`);
-      closeManualModal();
-    }
-    return false; // prevent real form submit
-  }
-
-  // Initial render
-  renderLogs(logsData);
-  </script>
-</body>
+  </script></body>
 </html>
