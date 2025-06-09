@@ -1,188 +1,636 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>7xLike Free Fire Activity Logs</title>
-  <!-- Free Fire style colors/fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: #181920 url('https://static.wikia.nocookie.net/freefire/images/6/6c/FFLobbyBG.jpg') center/cover no-repeat;
-      font-family: 'Orbitron', Arial, sans-serif;
-      color: #eee;
-      margin: 0;
-      min-height: 100vh;
-      padding-bottom: 80px;
-    }
-    .navbar {
-      background: rgba(12,17,35,0.95);
-      color: #FFD700;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.7em 1em;
-      font-size: 1.2em;
-      letter-spacing: 2px;
-      border-bottom: 3px solid #FFD700;
-    }
-    .navbar .brand { font-size: 1.5em; }
-    .navbar .manual-btn {
-      background: #FF4500;
-      color: #fff;
-      font-weight: bold;
-      border: none;
-      border-radius: 7px;
-      padding: 8px 20px;
-      cursor: pointer;
-      font-family: inherit;
-      box-shadow: 1px 1px 5px #0006;
-      transition: background .2s;
-    }
-    .navbar .manual-btn:hover { background: #e63e00; }
-    .container {
-      max-width: 600px;
-      margin: 1.5em auto;
-      background: rgba(20,22,30,.89);
-      border-radius: 12px;
-      box-shadow: 0 2px 18px #000a;
-      padding: 1.2em;
-    }
-    .section-title {
-      color: #FDFF00;
-      text-align: left;
-      font-size: 1.3em;
-      margin: 1.2em 0 .6em;
-      border-left: 4px solid #FDFF00;
-      padding-left: 8px;
-      letter-spacing: 2px;
-    }
-    /* Modal styles */
-    .modal-bg {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #000a;
-      z-index: 100;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-bg.active { display: flex; }
-    .modal {
-      background: rgba(30,30,30,0.95);
-      border: 2px solid #FFD700;
-      border-radius: 12px;
-      padding: 1.5em;
-      width: 320px;
-      color: #fff;
-      text-align: center;
-      box-shadow: 0 4px 22px #000b;
-      position: relative;
-    }
-    .modal h2 {
-      margin: 0;
-      font-size: 1.4em;
-      color: #FF4500;
-      text-shadow: 1px 1px 2px #000;
-    }
-    .modal input {
-      width: 90%;
-      padding: .6em;
-      margin: .8em 0;
-      border: 1.5px solid #FFD700;
-      background: #14141c;
-      color: #FFD700;
-      border-radius: 6px;
-      font-size: 1em;
-      outline: none;
-      font-family: inherit;
-      text-align: center;
-    }
-    .modal button {
-      background: #FFD700;
-      border: none;
-      padding: .6em 1.2em;
-      border-radius: 6px;
-      font-size: 1em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .modal button:hover { background: #ffda47; }
-    .modal .close-btn {
-      position: absolute;
-      top: .5em; right: .7em;
-      background: #ff4343;
-      border: none;
-      color: #fff;
-      padding: .3em .6em;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    /* Result popup details */
-    .result-details {
-      text-align: left;
-      margin-top: .8em;
-      background: #23263a;
-      padding: .8em;
-      border-radius: 6px;
-      border: 1px solid #FFD700;
-    }
-    .result-details p { margin: .4em 0; line-height: 1.2; }
-    .error { color: #FF4365; font-weight: bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7xLike - Free Fire Daily Likes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oxanium', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)), 
+                        url('https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/202210/2729a4b3815b0d10740e5e0e54528a4d.jpg') center/cover no-repeat fixed;
+            color: #f0f0f0;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.8rem;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(20, 20, 35, 0.7);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0 30px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 5px;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .date-group {
+            margin-bottom: 30px;
+            background: rgba(15, 15, 30, 0.85);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .date-header {
+            background: linear-gradient(to right, rgba(40, 40, 70, 0.9), rgba(60, 60, 100, 0.9));
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .date-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .date-count {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .players-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .player-card {
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #FFD700, #FF8C00);
+        }
+
+        .player-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-name i {
+            color: #FF8C00;
+        }
+
+        .player-likes {
+            font-size: 0.9rem;
+            color: #aaa;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .likes-count {
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .log-details {
+            background: rgba(20, 20, 35, 0.95);
+            padding: 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            display: none;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-label {
+            width: 140px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #FFD700;
+            font-weight: 500;
+        }
+
+        .success-badge {
+            background: rgba(0, 200, 0, 0.15);
+            color: #00ff00;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .before-after {
+            display: flex;
+            gap: 15px;
+        }
+
+        .before-after > div {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .ba-label {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .ba-value {
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px 0 15px;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .players-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .players-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .date-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .date-count {
+                align-self: flex-end;
+            }
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar">
-    <span class="brand">7xLike | Free Fire Logs</span>
-    <button class="manual-btn" onclick="openModal()">Send Likes</button>
-  </nav>
-  <div class="container">
-    <div class="section-title">Recent Activity</div>
-    <!-- existing logs accordion here -->
-  </div>  <!-- Modal: Send Likes -->  <div class="modal-bg" id="likeModal">
-    <div class="modal">
-      <button class="close-btn" onclick="closeModal()">×</button>
-      <h2>Send Likes</h2>
-      <input type="text" id="uidInput" placeholder="Enter Free Fire UID" required />
-      <button onclick="sendLikes()">Submit</button>
-      <div id="result" class="result-details" style="display:none;"></div>
-    </div>
-  </div>  <script>
-    function openModal() {
-      document.getElementById('likeModal').classList.add('active');
-      document.getElementById('result').style.display = 'none';
-      document.getElementById('uidInput').value = '';
-    }
-    function closeModal() { document.getElementById('likeModal').classList.remove('active'); }
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-fire logo-icon"></i>
+                <h1>7xLike - Daily Activity Logs</h1>
+            </div>
+            <p class="subtitle">Track your Free Fire daily likes activity</p>
+        </header>
 
-    async function sendLikes() {
-      const uid = document.getElementById('uidInput').value.trim();
-      if (!uid) return;
-      const api = `https://7x-like.vercel.app/like?uid=${uid}&server_name=ind`;
-      const resultDiv = document.getElementById('result');
-      resultDiv.style.display = 'none';
-      try {
-        const res = await fetch(api);
-        if (!res.ok) throw new Error('Network response was not ok');
-        const data = await res.json();
-        // Clear previous
-        resultDiv.innerHTML = '';
-        if (data.status === 2) {
-          resultDiv.innerHTML = `<p class="error">⚠️ Already received likes today.</p>`;
-        } else if (data.status === 1) {
-          resultDiv.innerHTML = `
-            <p>✔️ <strong>${data.PlayerNickname}</strong> (UID: ${data.UID})</p>
-            <p>Likes Given: ${data.LikesGivenByAPI}</p>
-            <p>Before: ${data.LikesbeforeCommand}</p>
-            <p>After: ${data.LikesafterCommand}</p>
-          `;
-        } else {
-          resultDiv.innerHTML = `<p class="error">Unexpected response status: ${data.status}</p>`;
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Accounts</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">396</div>
+                <div class="stat-label">Likes Today</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">99.8%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <div class="date-group">
+            <div class="date-header" onclick="toggleDetails(this)">
+                <div class="date-title">June 9, 2025 (Monday)</div>
+                <div class="date-count">5 accounts</div>
+            </div>
+            <div class="players-container">
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-user"></i> BLACK FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">651948621 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">20616</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">20715</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-user"></i> BLADE FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">661067880 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">16823</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">16922</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-user"></i> FREEDOM EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">1830656132 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">4279</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">4378</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-user"></i> BLAST FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">1322681052 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">2756</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">2855</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-user"></i> SWEETY FF</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">1852957153 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">3011</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">3110</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="date-group">
+            <div class="date-header" onclick="toggleDetails(this)">
+                <div class="date-title">June 9, 2025 (Earlier)</div>
+                <div class="date-count">2 accounts</div>
+            </div>
+            <div class="players-container">
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-user"></i> BLACK FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">0</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 17:44:03</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">651948621 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">20614</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">20614</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-user"></i> BLADE FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 17:44:03</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">661067880 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">16823</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">16922</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>7xLike - Free Fire Daily Likes System | Last Updated: June 10, 2025</p>
+            <p>All data is securely stored and processed</p>
+        </div>
+    </div>
+
+    <script>
+        function togglePlayerDetails(element) {
+            const details = element.querySelector('.log-details');
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
+            
+            // Close other open details when opening a new one
+            if (details.style.display === 'block') {
+                const allDetails = document.querySelectorAll('.log-details');
+                allDetails.forEach(detail => {
+                    if (detail !== details) {
+                        detail.style.display = 'none';
+                    }
+                });
+            }
         }
-      } catch (err) {
-        resultDiv.innerHTML = `<p class="error">Error: ${err.message}</p>`;
-      }
-      resultDiv.style.display = 'block';
-    }
-  </script></body>
+        
+        function toggleDetails(element) {
+            const playersContainer = element.nextElementSibling;
+            playersContainer.style.display = playersContainer.style.display === 'none' ? 'grid' : 'none';
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close all details panels initially
+            document.querySelectorAll('.log-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+        });
+    </script>
+</body>
 </html>
