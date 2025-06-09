@@ -1,67 +1,351 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>7xLike - Daily Logs</title>
-<style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f0f2f5;
-        }
-        h1, h2 {
-            color: #4267B2;
-            text-align: center;
-        }
-        .log-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .log-entry {
-            border-left: 4px solid #4267B2;
-            padding: 10px;
-            margin-bottom: 15px;
-            background-color: #f7f7f7;
-        }
-        .log-date {
-            font-weight: bold;
-            color: #4267B2;
-        }
-        .log-details {
-            margin-top: 5px;
-            line-height: 1.5;
-        }
-        .success {
-            color: green;
-        }
-        .error {
-            color: red;
-        }
-        .player-info {
-            margin-top: 10px;
-            padding-left: 15px;
-            border-left: 2px solid #ddd;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>7xLike Free Fire Activity Logs</title>
+  <!-- Free Fire style colors/fonts: -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #181920 url('https://static.wikia.nocookie.net/freefire/images/6/6c/FFLobbyBG.jpg') center/cover no-repeat;
+      font-family: 'Orbitron', Arial, sans-serif;
+      color: #eee;
+      margin: 0;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+    .navbar {
+      background: rgba(12,17,35,0.95);
+      color: #FFD700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7em 1em;
+      font-size: 1.2em;
+      letter-spacing: 2px;
+      border-bottom: 3px solid #FFD700;
+    }
+    .navbar .brand {
+      font-size: 1.5em;
+    }
+    .navbar .manual-btn {
+      background: #FFD700;
+      color: #181920;
+      font-weight: bold;
+      border: none;
+      border-radius: 7px;
+      padding: 8px 20px;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 1px 1px 5px #0006;
+      transition: background .2s;
+    }
+    .navbar .manual-btn:hover {
+      background: #ffa600;
+    }
+    .container {
+      max-width: 600px;
+      margin: 1.5em auto;
+      background: rgba(20,22,30,.89);
+      border-radius: 12px;
+      box-shadow: 0 2px 18px #000a;
+      padding: 1.2em 1.2em 2em 1.2em;
+    }
+    .section-title {
+      color: #FFD700;
+      text-align: left;
+      font-size: 1.3em;
+      margin: 1.2em 0 0.6em 0;
+      border-left: 4px solid #FFD700;
+      padding-left: 8px;
+      letter-spacing: 2px;
+    }
+    .accordion {
+      margin: 0;
+    }
+    .accordion-day {
+      margin-bottom: 12px;
+    }
+    .accordion-day-btn {
+      background: #23263a;
+      font-family: inherit;
+      color: #FFD700;
+      border: none;
+      width: 100%;
+      text-align: left;
+      padding: 0.8em 1em;
+      font-size: 1.08em;
+      cursor: pointer;
+      border-radius: 7px 7px 0 0;
+      outline: none;
+      position: relative;
+      margin-bottom: 2px;
+      transition: background .18s;
+    }
+    .accordion-day-btn:hover { background: #282a43; }
+    .accordion-day-btn:after {
+      content: "▼";
+      float: right;
+      transition: transform .2s;
+    }
+    .accordion-day-btn[aria-expanded="true"]:after {
+      transform: rotate(-180deg);
+    }
+    .accordion-content {
+      display: none;
+      background: #242838;
+      padding: 0.7em 1.2em 0.9em 1.2em;
+      border-radius: 0 0 9px 9px;
+      box-shadow: 0 1px 8px #0003;
+      margin-bottom: 8px;
+    }
+    .accordion-content[aria-hidden="false"] {
+      display: block;
+    }
+    /* Each run-time log entry */
+    .run-log {
+      margin-bottom: 1em;
+      border-left: 3px solid #FFD700;
+      padding-left: 10px;
+      background: #1e2130;
+      border-radius: 7px;
+      padding-bottom: 0.7em;
+      box-shadow: 0 0 3px #0002;
+    }
+    .run-log-title {
+      font-size: 1.08em;
+      color: #FFD700;
+      margin-bottom: .3em;
+      margin-top: .7em;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    /* Collapsible accounts log inside each run */
+    details.accounts-log {
+      background: #22242f;
+      color: #fff;
+      margin-bottom: 0.6em;
+      border-radius: 6px;
+      padding: 0.5em 0.7em;
+      box-shadow: 0 1px 6px #0003;
+    }
+    details.accounts-log summary {
+      font-size: 1em;
+      color: #FFD700;
+      cursor: pointer;
+      outline: none;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    .account-list {
+      margin-left: 1em;
+      margin-top: 0.3em;
+      font-size: 0.99em;
+    }
+    .account-success { color: #5CFF5C; }
+    .account-fail { color: #ff4343; }
+    /* Modal for manual send likes */
+    .modal-bg {
+      display: none;
+      position: fixed; left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: #000a;
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-bg.active { display: flex; }
+    .modal {
+      background: #242838;
+      border-radius: 12px;
+      padding: 2em 1.2em 1.6em 1.2em;
+      min-width: 290px;
+      box-shadow: 0 4px 22px #000b;
+      color: #FFD700;
+      text-align: center;
+      font-size: 1.1em;
+      position: relative;
+    }
+    .modal input, .modal button {
+      font-size: 1.05em;
+      padding: .5em .7em;
+      border-radius: 7px;
+      margin-top: 1em;
+    }
+    .modal input {
+      border: 1.5px solid #FFD700;
+      background: #14141c;
+      color: #FFD700;
+      width: 85%;
+      margin-bottom: .8em;
+      outline: none;
+      font-family: inherit;
+      text-align: center;
+    }
+    .modal button {
+      border: none;
+      background: #FFD700;
+      color: #23263a;
+      font-weight: bold;
+      padding: .55em 2em;
+      cursor: pointer;
+      margin-right: .6em;
+      transition: background .17s;
+    }
+    .modal button:hover { background: #ffa600; }
+    .modal .close-btn {
+      background: #ff4343;
+      color: #fff;
+      position: absolute;
+      top: .6em; right: .8em;
+      padding: .28em .8em;
+      border-radius: 4px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 2px #000;
+    }
+    @media (max-width: 700px) {
+      .container { max-width: 98vw; padding: 0.4em 0.2em 1em 0.2em; }
+      .navbar { font-size: 1em; }
+      .section-title { font-size: 1.1em; }
+    }
+  </style>
 </head>
 <body>
-<h1>7xLike - Daily Activity Logs</h1>
-<div class="log-container">
-<h2>Recent Activity</h2>
-<div id="logs-content">
-<!-- Logs will be inserted here by the GitHub Action -->
-<div class="log-entry"><div class="log-date">Run Time: 2025-06-09 22:17:20</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 20616 | After: 20715</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 16823 | After: 16922</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 4279 | After: 4378</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 2756 | After: 2855</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 3011 | After: 3110</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-09 17:44:03</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20614 | After: 20614</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16821 | After: 16821</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 4279 | After: 4279</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 2756 | After: 2756</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 3011 | After: 3011</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-09 09:27:14</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20605 | After: 20605</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16818 | After: 16818</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 4277 | After: 4277</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 2756 | After: 2756</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 3011 | After: 3011</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 22:14:53</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20598 | After: 20598</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16818 | After: 16818</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 4277 | After: 4277</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 2756 | After: 2756</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 3011 | After: 3011</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 21:51:48</div><div class="log-details"><div class="error">❌ UID: 651948621 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 661067880 (IND): Failed - Failed with status code: 500</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 4178 | After: 4277</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 2657 | After: 2756</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 98 | Before: 2913 | After: 3011</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 08:51:25</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20484 | After: 20484</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16713 | After: 16713</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 4174 | After: 4174</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 2657 | After: 2657</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 2913 | After: 2913</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 07:56:11</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20484 | After: 20484</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16713 | After: 16713</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 4174 | After: 4174</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 2657 | After: 2657</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 1 | Before: 2912 | After: 2913</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 05:12:13</div><div class="log-details"><div class="error">❌ UID: 651948621 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 661067880 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1830656132 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1322681052 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1852957153 (IND): Failed - Failed with status code: 500</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 01:34:04</div><div class="log-details"><div class="error">❌ UID: 651948621 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 661067880 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1830656132 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1322681052 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1852957153 (IND): Failed - Failed with status code: 500</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 01:03:17</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20484 | After: 20484</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16713 | After: 16713</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 4174 | After: 4174</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 2657 | After: 2657</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 2813 | After: 2912</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 00:57:51</div><div class="log-details"><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 4075 | After: 4174</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 2558 | After: 2657</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 00:53:09</div><div class="log-details"><div class="success">✅ UID: 651948622 (IND): Success</div><div class="player-info">Player: kishu0001n | Likes Given: 0 | Before: 570 | After: 570</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16713 | After: 16713</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 00:44:01</div><div class="log-details"><div class="error">❌ UID: 651948622 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 661067880 (IND): Failed - Failed with status code: 500</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-08 00:40:32</div><div class="log-details"><div class="error">❌ UID: 651948621 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 661067880 (IND): Failed - Failed with status code: 500</div></div></div><div class="log-entry">
-<div class="log-date">Waiting for first run data...</div>
-<div class="log-details">No activity recorded yet. The logs will appear here after the first successful run of the workflow.</div>
-</div>
-</div>
-</div>
+  <nav class="navbar">
+    <span class="brand">7xLike | Free Fire Logs</span>
+    <button class="manual-btn" onclick="openManualModal()">Send Likes</button>
+  </nav>
+  <div class="container">
+    <div class="section-title">Recent Activity</div>
+    <div class="accordion" id="logsAccordion">
+      <!-- JS will inject log accordions here -->
+    </div>
+  </div>
+
+  <!-- MODAL: Manual Send Likes -->
+  <div class="modal-bg" id="manualModal">
+    <form class="modal" onsubmit="return sendLikesManually()">
+      <button class="close-btn" onclick="closeManualModal()" type="button">&times;</button>
+      <div style="font-size:1.25em;font-weight:bold;margin-bottom:.6em;">Send Likes Manually</div>
+      <input type="text" id="manualUid" placeholder="Enter Free Fire UID" required/>
+      <input type="number" id="manualAmount" placeholder="No. of Likes (default 1)" min="1" max="100"/>
+      <br/>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+  // ---- Sample Data: Replace this with your real logs loader ----
+  // Grouped by date, each with a list of runs (each run has a time, and an accounts array)
+  const logsData = [
+    {
+      date: "2025-06-09",
+      runs: [
+        {
+          time: "22:17:20",
+          accounts: [
+            {uid: "651948621", nick: "BLACK FF EXE", likes: 99, before: 20616, after: 20715, status: "success"},
+            {uid: "661067880", nick: "BLADE FF EXE", likes: 99, before: 16823, after: 16922, status: "success"},
+            {uid: "1830656132", nick: "FREEDOM EXE", likes: 99, before: 4279, after: 4378, status: "success"},
+            {uid: "1322681052", nick: "BLAST FF EXE", likes: 99, before: 2756, after: 2855, status: "success"},
+            {uid: "1852957153", nick: "SWEETY FF", likes: 99, before: 3011, after: 3110, status: "success"},
+          ]
+        },
+        {
+          time: "17:44:03",
+          accounts: [
+            {uid: "651948621", nick: "BLACK FF EXE", likes: 0, before: 20614, after: 20614, status: "success"},
+            {uid: "661067880", nick: "BLADE FF EXE", likes: 0, before: 16817, after: 16817, status: "success"},
+            // ... (more accounts)
+          ]
+        }
+      ]
+    },
+    {
+      date: "2025-06-08",
+      runs: [
+        {
+          time: "22:19:01",
+          accounts: [
+            {uid: "651948621", nick: "BLACK FF EXE", likes: 99, before: 20517, after: 20616, status: "success"},
+            // ...
+          ]
+        }
+      ]
+    }
+  ];
+  //---------------------------------------------------------------
+
+  // Render logs as accordion per day
+  function renderLogs(data) {
+    const logsAccordion = document.getElementById('logsAccordion');
+    logsAccordion.innerHTML = "";
+    data.forEach((day, idx) => {
+      const dayId = `day-${idx}`;
+      const isOpen = idx === 0 ? 'true' : 'false'; // open most recent by default
+      // Day button
+      const dayBtn = `<button class="accordion-day-btn" aria-expanded="${isOpen}" onclick="toggleAccordion('${dayId}')">${day.date}</button>`;
+      // Day content: each run time as collapsible details
+      const dayContent = `
+        <div class="accordion-content" id="${dayId}" aria-hidden="${!isOpen}">
+          ${day.runs.map(run => `
+            <div class="run-log">
+              <div class="run-log-title">Run Time: ${run.time}</div>
+              <details class="accounts-log">
+                <summary>Show Accounts (${run.accounts.length})</summary>
+                <div class="account-list">
+                  ${run.accounts.map(acc => `
+                    <div>
+                      <span class="${acc.status==='success'?'account-success':'account-fail'}">
+                        ${acc.status==='success'?'✔️':'❌'} UID: ${acc.uid} (${acc.nick}) : ${acc.status.charAt(0).toUpperCase()+acc.status.slice(1)}
+                      </span>
+                      <div style="font-size:.98em;">Likes: ${acc.likes} | Before: ${acc.before} | After: ${acc.after}</div>
+                    </div>
+                  `).join("")}
+                </div>
+              </details>
+            </div>
+          `).join("")}
+        </div>
+      `;
+      logsAccordion.innerHTML += `<div class="accordion-day">${dayBtn}${dayContent}</div>`;
+      if (isOpen === "true") document.body.onload = () => toggleAccordion(dayId, true);
+    });
+  }
+
+  function toggleAccordion(id, openFirst=false) {
+    const content = document.getElementById(id);
+    const btn = content.previousElementSibling;
+    const isNowOpen = content.getAttribute('aria-hidden') === 'false' ? false : true;
+    // Close all others
+    document.querySelectorAll('.accordion-content').forEach(c => {
+      c.setAttribute('aria-hidden','true');
+      c.previousElementSibling.setAttribute('aria-expanded','false');
+    });
+    if (isNowOpen || openFirst) {
+      content.setAttribute('aria-hidden','false');
+      btn.setAttribute('aria-expanded','true');
+    }
+  }
+
+  // Manual send likes modal logic
+  function openManualModal() { document.getElementById('manualModal').classList.add('active'); }
+  function closeManualModal() { document.getElementById('manualModal').classList.remove('active'); }
+  function sendLikesManually() {
+    const uid = document.getElementById('manualUid').value.trim();
+    const amount = document.getElementById('manualAmount').value || 1;
+    if (uid && amount > 0) {
+      alert(`(Demo) Sending ${amount} likes to UID: ${uid}`);
+      closeManualModal();
+    }
+    return false; // prevent real form submit
+  }
+
+  // Initial render
+  renderLogs(logsData);
+  </script>
 </body>
 </html>
