@@ -1,761 +1,135 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>7xLike - Free Fire Daily Likes</title>
-<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Oxanium', 'Segoe UI', Tahoma, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>7xLike - Daily Activity Logs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Oxanium','Segoe UI',Tahoma,sans-serif;
+    }
+    body {
+      background: linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.9)),
+        url('https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/202210/2729a4b3815b0d10740e5e0e54528a4d.jpg')
+        center/cover no-repeat fixed;
+      color: #f0f0f0; min-height: 100vh;
+      padding: 20px; display: flex;
+      flex-direction: column; align-items: center;
+      overflow-x: hidden;
+    }
+    .particles {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%; z-index: -1;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute; width: 2px; height: 2px;
+      background: rgba(255,215,0,0.5); border-radius:50%;
+      animation: float 8s infinite linear;
+    }
+    @keyframes float {
+      0% {transform: translateY(0) translateX(0); opacity:1}
+      100% {transform: translateY(-100vh) translateX(20px); opacity:0}
+    }
+    .container {
+      max-width:1200px; width:100%; margin:0 auto; position:relative; z-index:1;
+    }
+    header {
+      text-align:center; padding:20px 0; margin-bottom:30px;
+      animation: slideDown 0.8s ease-out;
+    }
+    @keyframes slideDown {
+      0% {transform: translateY(-100px); opacity:0}
+      100% {transform: translateY(0); opacity:1}
+    }
+    .logo {
+      display:flex; align-items:center; justify-content:center; gap:15px;
+      margin-bottom:15px;
+    }
+    .logo-icon {
+      font-size:2.8rem; color:#FFD700; text-shadow:0 0 10px rgba(255,215,0,0.7);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% {transform:scale(1); text-shadow:0 0 10px rgba(255,215,0,0.7)}
+      50% {transform:scale(1.1); text-shadow:0 0 20px rgba(255,215,0,0.9)}
+    }
+    h1 {
+      font-size:2.5rem; text-transform:uppercase; letter-spacing:3px;
+      background:linear-gradient(to right,#FFD700,#FF8C00);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      margin-bottom:5px;
+    }
+    .subtitle { font-size:1.1rem; color:#aaa; margin-bottom:25px; }
 
-        body {
-            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)), 
-                        url('https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/202210/2729a4b3815b0d10740e5e0e54528a4d.jpg') center/cover no-repeat fixed;
-            color: #f0f0f0;
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        /* Particle background effect */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 215, 0, 0.5);
-            border-radius: 50%;
-            animation: float 8s infinite linear;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(20px);
-                opacity: 0;
-            }
-        }
-
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            text-align: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            position: relative;
-            animation: slideDown 0.8s ease-out;
-        }
-
-        @keyframes slideDown {
-            0% {
-                transform: translateY(-100px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .logo-icon {
-            font-size: 2.8rem;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-            }
-            50% {
-                transform: scale(1.1);
-                text-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
-            }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #FFD700, #FF8C00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #aaa;
-            margin-bottom: 25px;
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(20, 20, 35, 0.7);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0 30px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .stat-box {
-            text-align: center;
-            padding: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(to right, #FFD700, #FF8C00);
-        }
-
-        .stat-value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #FFD700;
-            margin-bottom: 5px;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #ccc;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .date-group {
-            margin-bottom: 30px;
-            background: rgba(15, 15, 30, 0.85);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .date-header {
-            background: linear-gradient(to right, rgba(40, 40, 70, 0.9), rgba(60, 60, 100, 0.9));
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .date-header:hover {
-            background: linear-gradient(to right, rgba(50, 50, 90, 0.9), rgba(70, 70, 120, 0.9));
-        }
-
-        .date-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #FFD700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .date-title i {
-            transition: transform 0.3s ease;
-        }
-
-        .date-count {
-            background: rgba(255, 215, 0, 0.2);
-            color: #FFD700;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .players-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 25px;
-        }
-
-        .player-card {
-            background: rgba(30, 30, 50, 0.8);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-            transform: translateY(0);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .player-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-
-        .player-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(to right, #FFD700, #FF8C00);
-        }
-
-        .player-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: 0.5s;
-            z-index: 0;
-        }
-
-        .player-card:hover::after {
-            left: 100%;
-        }
-
-        .player-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #FFD700;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .player-name i {
-            color: #FF8C00;
-        }
-
-        .player-likes {
-            font-size: 1rem;
-            color: #aaa;
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            z-index: 1;
-        }
-
-        .likes-count {
-            color: #FFD700;
-            font-weight: 600;
-            font-size: 1.2rem;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 3px 10px;
-            border-radius: 20px;
-        }
-
-        .log-details {
-            background: rgba(20, 20, 35, 0.95);
-            padding: 20px;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
-            display: none;
-            position: relative;
-            z-index: 1;
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .detail-row {
-            display: flex;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .detail-label {
-            width: 140px;
-            color: #aaa;
-            font-size: 0.95rem;
-        }
-
-        .detail-value {
-            flex: 1;
-            color: #FFD700;
-            font-weight: 500;
-        }
-
-        .success-badge {
-            background: rgba(0, 200, 0, 0.15);
-            color: #00ff00;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            display: inline-block;
-        }
-
-        .before-after {
-            display: flex;
-            gap: 15px;
-        }
-
-        .before-after > div {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .before-after > div:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .ba-label {
-            color: #aaa;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-
-        .ba-value {
-            color: #FFD700;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 25px 0 15px;
-            color: #777;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.1);
-            margin-top: 20px;
-            width: 100%;
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* Floating animation for cards */
-        @keyframes floatCard {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        .player-card:nth-child(odd) {
-            animation: floatCard 6s ease-in-out infinite;
-        }
-
-        .player-card:nth-child(even) {
-            animation: floatCard 6s ease-in-out infinite 0.5s;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .stats-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .players-container {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .players-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .date-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .date-count {
-                align-self: flex-end;
-            }
-        }
-    </style>
+    /* —— DYNAMIC LOGS CONTAINER —— */
+    .log-container {
+      background: rgba(20,20,35,0.85);
+      border-radius:12px; padding:20px; margin-bottom:30px;
+      border:1px solid rgba(255,215,0,0.3);
+      box-shadow:0 5px 15px rgba(0,0,0,0.5);
+      width:100%; backdrop-filter:blur(5px);
+      animation: fadeIn 1s ease-out;
+    }
+    .log-container h2 {
+      color:#FFD700; text-align:center; margin-bottom:15px;
+      font-weight:600;
+    }
+    #logs-content { /* placeholder for update_logs.py */ }
+    .log-entry {
+      border-left:4px solid #FFD700; background:#1e1e1e;
+      padding:10px; margin-bottom:15px; color:#f0f0f0;
+    }
+    .log-date { font-weight:bold; color:#FFD700; }
+    .log-details { margin-top:8px; line-height:1.4; }
+    .success { color:#00FF00; }
+    .error   { color:#FF4500; }
+    .player-info {
+      margin-top:8px; padding-left:15px; border-left:2px solid #555;
+    }
+    @keyframes fadeIn {
+      0% {opacity:0; transform: translateY(20px)}
+      100% {opacity:1; transform: translateY(0)}
+    }
+  </style>
 </head>
 <body>
-<!-- Particle background effect -->
-<div class="particles" id="particles"></div>
-<div class="container">
-<header>
-<div class="logo">
-<i class="fas fa-fire logo-icon"></i>
-<h1>7xLike - Daily Activity Logs</h1>
-</div>
-<p class="subtitle">Track your Free Fire daily likes activity</p>
-</header>
-<div class="stats-container">
-<div class="stat-box">
-<div class="stat-value">5</div>
-<div class="stat-label">Accounts</div>
-</div>
-<div class="stat-box">
-<div class="stat-value">396</div>
-<div class="stat-label">Likes Today</div>
-</div>
-<div class="stat-box">
-<div class="stat-value">99.8%</div>
-<div class="stat-label">Success Rate</div>
-</div>
-</div>
-<!-- Only showing the 10 most recent logs -->
-<div class="date-group">
-<div class="date-header" onclick="toggleDetails(this)">
-<div class="date-title"><i class="fas fa-calendar-day"></i> June 9, 2025 (Monday)</div>
-<div class="date-count">5 accounts</div>
-</div>
-<div class="players-container">
-<div class="player-card" onclick="togglePlayerDetails(this)">
-<div class="player-name"><i class="fas fa-crown"></i> BLACK FF EXE</div>
-<div class="player-likes">
-<span>Likes Given:</span>
-<span class="likes-count">99</span>
-</div>
-<div class="log-details">
-<div class="detail-row">
-<div class="detail-label">Run Time:</div>
-<div class="detail-value">2025-06-09 22:17:20</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">UID:</div>
-<div class="detail-value">651948621 (IND)</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Status:</div>
-<div class="detail-value"><span class="success-badge">Success</span></div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Likes:</div>
-<div class="detail-value">
-<div class="before-after">
-<div>
-<div class="ba-label">Before</div>
-<div class="ba-value">20616</div>
-</div>
-<div>
-<div class="ba-label">After</div>
-<div class="ba-value">20715</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="player-card" onclick="togglePlayerDetails(this)">
-<div class="player-name"><i class="fas fa-shield-alt"></i> BLADE FF EXE</div>
-<div class="player-likes">
-<span>Likes Given:</span>
-<span class="likes-count">99</span>
-</div>
-<div class="log-details">
-<div class="detail-row">
-<div class="detail-label">Run Time:</div>
-<div class="detail-value">2025-06-09 22:17:20</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">UID:</div>
-<div class="detail-value">661067880 (IND)</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Status:</div>
-<div class="detail-value"><span class="success-badge">Success</span></div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Likes:</div>
-<div class="detail-value">
-<div class="before-after">
-<div>
-<div class="ba-label">Before</div>
-<div class="ba-value">16823</div>
-</div>
-<div>
-<div class="ba-label">After</div>
-<div class="ba-value">16922</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="player-card" onclick="togglePlayerDetails(this)">
-<div class="player-name"><i class="fas fa-crosshairs"></i> FREEDOM EXE</div>
-<div class="player-likes">
-<span>Likes Given:</span>
-<span class="likes-count">99</span>
-</div>
-<div class="log-details">
-<div class="detail-row">
-<div class="detail-label">Run Time:</div>
-<div class="detail-value">2025-06-09 22:17:20</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">UID:</div>
-<div class="detail-value">1830656132 (IND)</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Status:</div>
-<div class="detail-value"><span class="success-badge">Success</span></div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Likes:</div>
-<div class="detail-value">
-<div class="before-after">
-<div>
-<div class="ba-label">Before</div>
-<div class="ba-value">4279</div>
-</div>
-<div>
-<div class="ba-label">After</div>
-<div class="ba-value">4378</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="player-card" onclick="togglePlayerDetails(this)">
-<div class="player-name"><i class="fas fa-bomb"></i> BLAST FF EXE</div>
-<div class="player-likes">
-<span>Likes Given:</span>
-<span class="likes-count">99</span>
-</div>
-<div class="log-details">
-<div class="detail-row">
-<div class="detail-label">Run Time:</div>
-<div class="detail-value">2025-06-09 22:17:20</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">UID:</div>
-<div class="detail-value">1322681052 (IND)</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Status:</div>
-<div class="detail-value"><span class="success-badge">Success</span></div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Likes:</div>
-<div class="detail-value">
-<div class="before-after">
-<div>
-<div class="ba-label">Before</div>
-<div class="ba-value">2756</div>
-</div>
-<div>
-<div class="ba-label">After</div>
-<div class="ba-value">2855</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="player-card" onclick="togglePlayerDetails(this)">
-<div class="player-name"><i class="fas fa-heart"></i> SWEETY FF</div>
-<div class="player-likes">
-<span>Likes Given:</span>
-<span class="likes-count">99</span>
-</div>
-<div class="log-details">
-<div class="detail-row">
-<div class="detail-label">Run Time:</div>
-<div class="detail-value">2025-06-09 22:17:20</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">UID:</div>
-<div class="detail-value">1852957153 (IND)</div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Status:</div>
-<div class="detail-value"><span class="success-badge">Success</span></div>
-</div>
-<div class="detail-row">
-<div class="detail-label">Likes:</div>
-<div class="detail-value">
-<div class="before-after">
-<div>
-<div class="ba-label">Before</div>
-<div class="ba-value">3011</div>
-</div>
-<div>
-<div class="ba-label">After</div>
-<div class="ba-value">3110</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="footer">
-<p>7xLike - Free Fire Daily Likes System | Last Updated: June 10, 2025</p>
-<p>All data is securely stored and processed | Showing 10 most recent logs</p>
-</div>
-</div>
-<script>
-        // Create particle background effect
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Random position
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                // Random size
-                const size = Math.random() * 3 + 1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Random animation duration
-                particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        function togglePlayerDetails(element) {
-            const details = element.querySelector('.log-details');
-            const isOpening = details.style.display !== 'block';
-            
-            details.style.display = isOpening ? 'block' : 'none';
-            
-            // Close other open details when opening a new one
-            if (isOpening) {
-                const allDetails = document.querySelectorAll('.log-details');
-                allDetails.forEach(detail => {
-                    if (detail !== details) {
-                        detail.style.display = 'none';
-                    }
-                });
-            }
-        }
-        
-        function toggleDetails(element) {
-            const playersContainer = element.nextElementSibling;
-            const icon = element.querySelector('i');
-            const isOpening = playersContainer.style.display !== 'grid';
-            
-            playersContainer.style.display = isOpening ? 'grid' : 'none';
-            icon.style.transform = isOpening ? 'rotate(90deg)' : 'rotate(0)';
-        }
-        
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create particle background
-            createParticles();
-            
-            // Close all details panels initially
-            document.querySelectorAll('.log-details').forEach(detail => {
-                detail.style.display = 'none';
-            });
-            
-            // Add hover effect to all player cards
-            document.querySelectorAll('.player-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-10px)';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0)';
-                });
-            });
-        });
-    </script>
-<div class="log-container"><div id="logs-content"><div class="log-entry"><div class="log-date">Run Time: 2025-07-04 23:32:05</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 23236 | After: 23236</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 19308 | After: 19308</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 6734 | After: 6734</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 5201 | After: 5201</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 5451 | After: 5451</div></div></div></div></div></body>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <i class="fas fa-fire logo-icon"></i>
+        <h1>7xLike - Daily Activity Logs</h1>
+      </div>
+      <p class="subtitle">Track your Free Fire daily likes activity</p>
+    </header>
+
+    <div class="log-container">
+      <h2>Recent Activity</h2>
+      <div id="logs-content"><!-- update_logs.py injects here --></div>
+    </div>
+  </div>
+
+  <script>
+    // Particle background
+    function createParticles() {
+      const container = document.getElementById('particles');
+      for (let i=0; i<50; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random()*100 + '%';
+        p.style.top  = Math.random()*100 + '%';
+        const size = Math.random()*3 + 1;
+        p.style.width = size+'px'; p.style.height = size+'px';
+        p.style.animationDuration = (Math.random()*10 + 5)+'s';
+        p.style.animationDelay    = Math.random()*5+'s';
+        container.appendChild(p);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', createParticles);
+  </script>
+</body>
 </html>
