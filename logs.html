@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7xLike - Free Fire Daily Likes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>7xLike - Free Fire Daily Likes</title>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -463,234 +464,225 @@
     </style>
 </head>
 <body>
-    <!-- Particle background effect -->
-    <div class="particles" id="particles"></div>
-
-    <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-fire logo-icon"></i>
-                <h1>7xLike - Daily Activity Logs</h1>
-            </div>
-            <p class="subtitle">Track your Free Fire daily likes activity</p>
-        </header>
-
-        <div class="stats-container">
-            <div class="stat-box">
-                <div class="stat-value">5</div>
-                <div class="stat-label">Accounts</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value">396</div>
-                <div class="stat-label">Likes Today</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value">99.8%</div>
-                <div class="stat-label">Success Rate</div>
-            </div>
-        </div>
-
-        <!-- Only showing the 10 most recent logs -->
-        <div class="date-group">
-            <div class="date-header" onclick="toggleDetails(this)">
-                <div class="date-title"><i class="fas fa-calendar-day"></i> June 9, 2025 (Monday)</div>
-                <div class="date-count">5 accounts</div>
-            </div>
-            <div class="players-container">
-                <div class="player-card" onclick="togglePlayerDetails(this)">
-                    <div class="player-name"><i class="fas fa-crown"></i> BLACK FF EXE</div>
-                    <div class="player-likes">
-                        <span>Likes Given:</span>
-                        <span class="likes-count">99</span>
-                    </div>
-                    <div class="log-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Run Time:</div>
-                            <div class="detail-value">2025-06-09 22:17:20</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">UID:</div>
-                            <div class="detail-value">651948621 (IND)</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Status:</div>
-                            <div class="detail-value"><span class="success-badge">Success</span></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Likes:</div>
-                            <div class="detail-value">
-                                <div class="before-after">
-                                    <div>
-                                        <div class="ba-label">Before</div>
-                                        <div class="ba-value">20616</div>
-                                    </div>
-                                    <div>
-                                        <div class="ba-label">After</div>
-                                        <div class="ba-value">20715</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="player-card" onclick="togglePlayerDetails(this)">
-                    <div class="player-name"><i class="fas fa-shield-alt"></i> BLADE FF EXE</div>
-                    <div class="player-likes">
-                        <span>Likes Given:</span>
-                        <span class="likes-count">99</span>
-                    </div>
-                    <div class="log-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Run Time:</div>
-                            <div class="detail-value">2025-06-09 22:17:20</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">UID:</div>
-                            <div class="detail-value">661067880 (IND)</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Status:</div>
-                            <div class="detail-value"><span class="success-badge">Success</span></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Likes:</div>
-                            <div class="detail-value">
-                                <div class="before-after">
-                                    <div>
-                                        <div class="ba-label">Before</div>
-                                        <div class="ba-value">16823</div>
-                                    </div>
-                                    <div>
-                                        <div class="ba-label">After</div>
-                                        <div class="ba-value">16922</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="player-card" onclick="togglePlayerDetails(this)">
-                    <div class="player-name"><i class="fas fa-crosshairs"></i> FREEDOM EXE</div>
-                    <div class="player-likes">
-                        <span>Likes Given:</span>
-                        <span class="likes-count">99</span>
-                    </div>
-                    <div class="log-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Run Time:</div>
-                            <div class="detail-value">2025-06-09 22:17:20</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">UID:</div>
-                            <div class="detail-value">1830656132 (IND)</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Status:</div>
-                            <div class="detail-value"><span class="success-badge">Success</span></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Likes:</div>
-                            <div class="detail-value">
-                                <div class="before-after">
-                                    <div>
-                                        <div class="ba-label">Before</div>
-                                        <div class="ba-value">4279</div>
-                                    </div>
-                                    <div>
-                                        <div class="ba-label">After</div>
-                                        <div class="ba-value">4378</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="player-card" onclick="togglePlayerDetails(this)">
-                    <div class="player-name"><i class="fas fa-bomb"></i> BLAST FF EXE</div>
-                    <div class="player-likes">
-                        <span>Likes Given:</span>
-                        <span class="likes-count">99</span>
-                    </div>
-                    <div class="log-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Run Time:</div>
-                            <div class="detail-value">2025-06-09 22:17:20</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">UID:</div>
-                            <div class="detail-value">1322681052 (IND)</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Status:</div>
-                            <div class="detail-value"><span class="success-badge">Success</span></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Likes:</div>
-                            <div class="detail-value">
-                                <div class="before-after">
-                                    <div>
-                                        <div class="ba-label">Before</div>
-                                        <div class="ba-value">2756</div>
-                                    </div>
-                                    <div>
-                                        <div class="ba-label">After</div>
-                                        <div class="ba-value">2855</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="player-card" onclick="togglePlayerDetails(this)">
-                    <div class="player-name"><i class="fas fa-heart"></i> SWEETY FF</div>
-                    <div class="player-likes">
-                        <span>Likes Given:</span>
-                        <span class="likes-count">99</span>
-                    </div>
-                    <div class="log-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Run Time:</div>
-                            <div class="detail-value">2025-06-09 22:17:20</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">UID:</div>
-                            <div class="detail-value">1852957153 (IND)</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Status:</div>
-                            <div class="detail-value"><span class="success-badge">Success</span></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Likes:</div>
-                            <div class="detail-value">
-                                <div class="before-after">
-                                    <div>
-                                        <div class="ba-label">Before</div>
-                                        <div class="ba-value">3011</div>
-                                    </div>
-                                    <div>
-                                        <div class="ba-label">After</div>
-                                        <div class="ba-value">3110</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>7xLike - Free Fire Daily Likes System | Last Updated: June 10, 2025</p>
-            <p>All data is securely stored and processed | Showing 10 most recent logs</p>
-        </div>
-    </div>
-
-    <script>
+<!-- Particle background effect -->
+<div class="particles" id="particles"></div>
+<div class="container">
+<header>
+<div class="logo">
+<i class="fas fa-fire logo-icon"></i>
+<h1>7xLike - Daily Activity Logs</h1>
+</div>
+<p class="subtitle">Track your Free Fire daily likes activity</p>
+</header>
+<div class="stats-container">
+<div class="stat-box">
+<div class="stat-value">5</div>
+<div class="stat-label">Accounts</div>
+</div>
+<div class="stat-box">
+<div class="stat-value">396</div>
+<div class="stat-label">Likes Today</div>
+</div>
+<div class="stat-box">
+<div class="stat-value">99.8%</div>
+<div class="stat-label">Success Rate</div>
+</div>
+</div>
+<!-- Only showing the 10 most recent logs -->
+<div class="date-group">
+<div class="date-header" onclick="toggleDetails(this)">
+<div class="date-title"><i class="fas fa-calendar-day"></i> June 9, 2025 (Monday)</div>
+<div class="date-count">5 accounts</div>
+</div>
+<div class="players-container">
+<div class="player-card" onclick="togglePlayerDetails(this)">
+<div class="player-name"><i class="fas fa-crown"></i> BLACK FF EXE</div>
+<div class="player-likes">
+<span>Likes Given:</span>
+<span class="likes-count">99</span>
+</div>
+<div class="log-details">
+<div class="detail-row">
+<div class="detail-label">Run Time:</div>
+<div class="detail-value">2025-06-09 22:17:20</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">UID:</div>
+<div class="detail-value">651948621 (IND)</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Status:</div>
+<div class="detail-value"><span class="success-badge">Success</span></div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Likes:</div>
+<div class="detail-value">
+<div class="before-after">
+<div>
+<div class="ba-label">Before</div>
+<div class="ba-value">20616</div>
+</div>
+<div>
+<div class="ba-label">After</div>
+<div class="ba-value">20715</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="player-card" onclick="togglePlayerDetails(this)">
+<div class="player-name"><i class="fas fa-shield-alt"></i> BLADE FF EXE</div>
+<div class="player-likes">
+<span>Likes Given:</span>
+<span class="likes-count">99</span>
+</div>
+<div class="log-details">
+<div class="detail-row">
+<div class="detail-label">Run Time:</div>
+<div class="detail-value">2025-06-09 22:17:20</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">UID:</div>
+<div class="detail-value">661067880 (IND)</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Status:</div>
+<div class="detail-value"><span class="success-badge">Success</span></div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Likes:</div>
+<div class="detail-value">
+<div class="before-after">
+<div>
+<div class="ba-label">Before</div>
+<div class="ba-value">16823</div>
+</div>
+<div>
+<div class="ba-label">After</div>
+<div class="ba-value">16922</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="player-card" onclick="togglePlayerDetails(this)">
+<div class="player-name"><i class="fas fa-crosshairs"></i> FREEDOM EXE</div>
+<div class="player-likes">
+<span>Likes Given:</span>
+<span class="likes-count">99</span>
+</div>
+<div class="log-details">
+<div class="detail-row">
+<div class="detail-label">Run Time:</div>
+<div class="detail-value">2025-06-09 22:17:20</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">UID:</div>
+<div class="detail-value">1830656132 (IND)</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Status:</div>
+<div class="detail-value"><span class="success-badge">Success</span></div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Likes:</div>
+<div class="detail-value">
+<div class="before-after">
+<div>
+<div class="ba-label">Before</div>
+<div class="ba-value">4279</div>
+</div>
+<div>
+<div class="ba-label">After</div>
+<div class="ba-value">4378</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="player-card" onclick="togglePlayerDetails(this)">
+<div class="player-name"><i class="fas fa-bomb"></i> BLAST FF EXE</div>
+<div class="player-likes">
+<span>Likes Given:</span>
+<span class="likes-count">99</span>
+</div>
+<div class="log-details">
+<div class="detail-row">
+<div class="detail-label">Run Time:</div>
+<div class="detail-value">2025-06-09 22:17:20</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">UID:</div>
+<div class="detail-value">1322681052 (IND)</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Status:</div>
+<div class="detail-value"><span class="success-badge">Success</span></div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Likes:</div>
+<div class="detail-value">
+<div class="before-after">
+<div>
+<div class="ba-label">Before</div>
+<div class="ba-value">2756</div>
+</div>
+<div>
+<div class="ba-label">After</div>
+<div class="ba-value">2855</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="player-card" onclick="togglePlayerDetails(this)">
+<div class="player-name"><i class="fas fa-heart"></i> SWEETY FF</div>
+<div class="player-likes">
+<span>Likes Given:</span>
+<span class="likes-count">99</span>
+</div>
+<div class="log-details">
+<div class="detail-row">
+<div class="detail-label">Run Time:</div>
+<div class="detail-value">2025-06-09 22:17:20</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">UID:</div>
+<div class="detail-value">1852957153 (IND)</div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Status:</div>
+<div class="detail-value"><span class="success-badge">Success</span></div>
+</div>
+<div class="detail-row">
+<div class="detail-label">Likes:</div>
+<div class="detail-value">
+<div class="before-after">
+<div>
+<div class="ba-label">Before</div>
+<div class="ba-value">3011</div>
+</div>
+<div>
+<div class="ba-label">After</div>
+<div class="ba-value">3110</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<p>7xLike - Free Fire Daily Likes System | Last Updated: June 10, 2025</p>
+<p>All data is securely stored and processed | Showing 10 most recent logs</p>
+</div>
+</div>
+<script>
         // Create particle background effect
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
@@ -765,5 +757,5 @@
             });
         });
     </script>
-</body>
+<div class="log-container"><div id="logs-content"><div class="log-entry"><div class="log-date">Run Time: 2025-07-04 23:32:05</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 23236 | After: 23236</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 19308 | After: 19308</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 6734 | After: 6734</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 5201 | After: 5201</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 5451 | After: 5451</div></div></div></div></div></body>
 </html>
