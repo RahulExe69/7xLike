@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>7xLike - Free Fire Daily Likes</title>
-<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7xLike - Free Fire Daily Likes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -24,12 +23,46 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Particle background effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 215, 0, 0.5);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+                opacity: 0;
+            }
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         header {
@@ -37,6 +70,18 @@
             padding: 20px 0;
             margin-bottom: 30px;
             position: relative;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .logo {
@@ -51,6 +96,18 @@
             font-size: 2.8rem;
             color: #FFD700;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            }
+            50% {
+                transform: scale(1.1);
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+            }
         }
 
         h1 {
@@ -60,6 +117,9 @@
             color: #FFD700;
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
             margin-bottom: 5px;
+            background: linear-gradient(to right, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
@@ -78,11 +138,35 @@
             margin: 20px 0 30px;
             backdrop-filter: blur(5px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .stat-box {
             text-align: center;
             padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #FFD700, #FF8C00);
         }
 
         .stat-value {
@@ -107,6 +191,7 @@
             overflow: hidden;
             border: 1px solid rgba(255, 215, 0, 0.2);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease-out;
         }
 
         .date-header {
@@ -117,12 +202,24 @@
             align-items: center;
             cursor: pointer;
             border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .date-header:hover {
+            background: linear-gradient(to right, rgba(50, 50, 90, 0.9), rgba(70, 70, 120, 0.9));
         }
 
         .date-title {
             font-size: 1.3rem;
             font-weight: 600;
             color: #FFD700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-title i {
+            transition: transform 0.3s ease;
         }
 
         .date-count {
@@ -136,26 +233,28 @@
 
         .players-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 25px;
         }
 
         .player-card {
             background: rgba(30, 30, 50, 0.8);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid rgba(255, 215, 0, 0.1);
             position: relative;
             overflow: hidden;
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .player-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 215, 0, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.4);
         }
 
         .player-card::before {
@@ -168,14 +267,32 @@
             background: linear-gradient(to right, #FFD700, #FF8C00);
         }
 
+        .player-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+            z-index: 0;
+        }
+
+        .player-card:hover::after {
+            left: 100%;
+        }
+
         .player-name {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #FFD700;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
         }
 
         .player-name i {
@@ -183,16 +300,21 @@
         }
 
         .player-likes {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: #aaa;
             display: flex;
             justify-content: space-between;
+            position: relative;
+            z-index: 1;
         }
 
         .likes-count {
             color: #FFD700;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 10px;
+            border-radius: 20px;
         }
 
         .log-details {
@@ -200,6 +322,20 @@
             padding: 20px;
             border-top: 1px solid rgba(255, 215, 0, 0.2);
             display: none;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .detail-row {
@@ -241,6 +377,12 @@
             padding: 10px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .before-after > div:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
         .ba-label {
@@ -263,13 +405,30 @@
             border-top: 1px solid rgba(255, 215, 0, 0.1);
             margin-top: 20px;
             width: 100%;
+            animation: fadeIn 1s ease-out;
         }
-        
-        /* Styles for the log entries generated by Python */
-        .log-container {
-            display: none; /* Hide the original log container */
+
+        /* Floating animation for cards */
+        @keyframes floatCard {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
         }
-        
+
+        .player-card:nth-child(odd) {
+            animation: floatCard 6s ease-in-out infinite;
+        }
+
+        .player-card:nth-child(even) {
+            animation: floatCard 6s ease-in-out infinite 0.5s;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .stats-container {
@@ -304,220 +463,306 @@
     </style>
 </head>
 <body>
-<div class="container">
-<header>
-<div class="logo">
-<i class="fas fa-fire logo-icon"></i>
-<h1>7xLike - Daily Activity Logs</h1>
-</div>
-<p class="subtitle">Track your Free Fire daily likes activity</p>
-</header>
-</div>
-<!-- This is the container that your Python script updates -->
-<div class="log-container">
-<h2>Recent Activity</h2>
-<div id="logs-content">
-<!-- Content will be generated by Python script -->
-<div class="log-entry"><div class="log-date">Run Time: 2025-07-04 22:14:23</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 23137 | After: 23236</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 19209 | After: 19308</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 6635 | After: 6734</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 5102 | After: 5201</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 5352 | After: 5451</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-07-03 22:16:25</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 23013 | After: 23112</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 19110 | After: 19209</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 6536 | After: 6635</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 5002 | After: 5101</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 5253 | After: 5352</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-07-02 22:16:58</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 67 | Before: 22941 | After: 23008</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 67 | Before: 19039 | After: 19106</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 67 | Before: 6468 | After: 6535</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 67 | Before: 4935 | After: 5002</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 67 | Before: 5186 | After: 5253</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-07-02 04:12:00</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 32 | Before: 22909 | After: 22941</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 32 | Before: 19000 | After: 19032</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 32 | Before: 6436 | After: 6468</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 32 | Before: 4902 | After: 4934</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 32 | Before: 5153 | After: 5185</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-07-01 22:17:36</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 32 | Before: 22877 | After: 22909</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 32 | Before: 18968 | After: 19000</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 32 | Before: 6404 | After: 6436</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 32 | Before: 4870 | After: 4902</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 32 | Before: 5121 | After: 5153</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-30 22:16:30</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 20 | Before: 22854 | After: 22874</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 19 | Before: 18945 | After: 18964</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 19 | Before: 6385 | After: 6404</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 19 | Before: 4851 | After: 4870</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 20 | Before: 5099 | After: 5119</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-30 10:34:16</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 79 | Before: 22768 | After: 22847</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 80 | Before: 18862 | After: 18942</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 80 | Before: 6304 | After: 6384</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 80 | Before: 4770 | After: 4850</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 79 | Before: 5020 | After: 5099</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-29 22:13:54</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 20 | Before: 22744 | After: 22764</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 20 | Before: 18837 | After: 18857</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 20 | Before: 6284 | After: 6304</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 20 | Before: 4750 | After: 4770</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 20 | Before: 4999 | After: 5019</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-28 22:13:40</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 22633 | After: 22732</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18737 | After: 18836</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 6185 | After: 6284</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 4651 | After: 4750</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4895 | After: 4994</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-27 22:13:56</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 22530 | After: 22629</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18631 | After: 18730</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 6086 | After: 6185</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 4552 | After: 4651</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4794 | After: 4893</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-26 22:15:56</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 22430 | After: 22529</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18531 | After: 18630</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5983 | After: 6082</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 4451 | After: 4550</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4694 | After: 4793</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-25 22:17:15</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 22331 | After: 22430</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18432 | After: 18531</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5884 | After: 5983</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 4351 | After: 4450</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4595 | After: 4694</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-24 22:16:58</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 22231 | After: 22330</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18329 | After: 18428</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5784 | After: 5883</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 4249 | After: 4348</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4495 | After: 4594</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-23 22:17:11</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 22131 | After: 22230</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18230 | After: 18329</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5685 | After: 5784</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 4150 | After: 4249</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4396 | After: 4495</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-22 22:13:34</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 22032 | After: 22131</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18131 | After: 18230</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5585 | After: 5684</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 4051 | After: 4150</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4297 | After: 4396</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-21 22:14:37</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 21933 | After: 22032</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 18030 | After: 18129</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5483 | After: 5582</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3950 | After: 4049</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4198 | After: 4297</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-20 22:15:26</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 21801 | After: 21900</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17930 | After: 18029</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5384 | After: 5483</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3851 | After: 3950</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4099 | After: 4198</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-19 22:15:18</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 21701 | After: 21800</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17830 | After: 17929</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5284 | After: 5383</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3751 | After: 3850</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 4000 | After: 4099</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-18 22:17:25</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 21601 | After: 21700</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17729 | After: 17828</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5181 | After: 5280</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3651 | After: 3750</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 3901 | After: 4000</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-17 22:18:09</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 21466 | After: 21565</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17627 | After: 17726</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 5078 | After: 5177</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3549 | After: 3648</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 3801 | After: 3900</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-16 22:16:43</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 21366 | After: 21465</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17528 | After: 17627</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 4979 | After: 5078</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3450 | After: 3549</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 3702 | After: 3801</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-15 22:14:15</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 98 | Before: 21267 | After: 21365</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 98 | Before: 17429 | After: 17527</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 98 | Before: 4878 | After: 4976</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 98 | Before: 3351 | After: 3449</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 98 | Before: 3604 | After: 3702</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-14 22:11:58</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 98 | Before: 21165 | After: 21263</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 98 | Before: 17329 | After: 17427</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 98 | Before: 4779 | After: 4877</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 98 | Before: 3253 | After: 3351</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 98 | Before: 3506 | After: 3604</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-13 22:15:27</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 21060 | After: 21159</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17224 | After: 17323</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 4680 | After: 4779</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3154 | After: 3253</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 3407 | After: 3506</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-12 22:16:09</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 20954 | After: 21053</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17123 | After: 17222</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 4580 | After: 4679</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 3054 | After: 3153</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 3308 | After: 3407</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-12 00:07:25</div><div class="log-details"><div class="error">❌ UID: 651948621 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 661067880 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1830656132 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1322681052 (IND): Failed - Failed with status code: 500</div><div class="error">❌ UID: 1852957153 (IND): Failed - Failed with status code: 500</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-11 22:16:28</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 20841 | After: 20940</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 17022 | After: 17121</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 98 | Before: 4482 | After: 4580</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 98 | Before: 2956 | After: 3054</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 98 | Before: 3210 | After: 3308</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-11 19:32:09</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20837 | After: 20837</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 17022 | After: 17022</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 1 | Before: 4481 | After: 4482</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 1 | Before: 2955 | After: 2956</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 1 | Before: 3209 | After: 3210</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-10 22:16:33</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 99 | Before: 20724 | After: 20823</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 99 | Before: 16922 | After: 17021</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 99 | Before: 4381 | After: 4480</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 99 | Before: 2855 | After: 2954</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 99 | Before: 3110 | After: 3209</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-06-10 01:34:34</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 20718 | After: 20718</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 16922 | After: 16922</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 4378 | After: 4378</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 2855 | After: 2855</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 3110 | After: 3110</div></div></div></div>
-</div>
-<!-- This is where the enhanced UI will display logs -->
-<div id="grouped-logs"></div>
-<div class="footer">
-<p>7xLike - Free Fire Daily Likes System | Last Updated: <span id="current-date"></span></p>
-<p>All data is securely stored and processed</p>
-</div>
-<script>
-        // Function to parse and transform the log entries
-        function transformLogs() {
-            const logsContent = document.getElementById('logs-content');
-            const groupedLogs = document.getElementById('grouped-logs');
-            
-            if (!logsContent || !logsContent.children.length) {
-                groupedLogs.innerHTML = '<div class="no-logs">No activity logs found</div>';
-                return;
-            }
-            
-            // Create an object to group logs by date
-            const logsByDate = {};
-            
-            // Process each log entry
-            Array.from(logsContent.children).forEach(logEntry => {
-                if (!logEntry.classList.contains('log-entry')) return;
-                
-                const dateElement = logEntry.querySelector('.log-date');
-                if (!dateElement) return;
-                
-                // Extract the run time from the text
-                const runTimeText = dateElement.textContent.replace('Run Time: ', '');
-                const runDate = new Date(runTimeText);
-                const dateKey = runDate.toDateString();
-                
-                // Initialize date group if not exists
-                if (!logsByDate[dateKey]) {
-                    logsByDate[dateKey] = {
-                        date: runDate,
-                        runs: {}
-                    };
-                }
-                
-                // Initialize run group if not exists
-                if (!logsByDate[dateKey].runs[runTimeText]) {
-                    logsByDate[dateKey].runs[runTimeText] = [];
-                }
-                
-                // Process player entries
-                const logDetails = logEntry.querySelector('.log-details');
-                if (logDetails) {
-                    const players = [];
-                    let currentPlayer = null;
-                    
-                    // Process each detail element
-                    Array.from(logDetails.children).forEach(detail => {
-                        if (detail.classList.contains('success') || detail.classList.contains('error')) {
-                            // New player entry
-                            if (currentPlayer) players.push(currentPlayer);
-                            
-                            currentPlayer = {
-                                status: detail.classList.contains('success') ? 'success' : 'error',
-                                uid: detail.textContent.match(/UID: (\d+)/)?.[1] || 'N/A',
-                                server: detail.textContent.match(/\((\w+)\)/)?.[1] || 'N/A'
-                            };
-                        } else if (detail.classList.contains('player-info') && currentPlayer) {
-                            // Extract player info
-                            const infoText = detail.textContent;
-                            currentPlayer.name = infoText.match(/Player: ([^|]+)/)?.[1].trim() || 'Unknown';
-                            currentPlayer.likes = infoText.match(/Likes Given: (\d+)/)?.[1] || '0';
-                            currentPlayer.before = infoText.match(/Before: (\d+)/)?.[1] || '0';
-                            currentPlayer.after = infoText.match(/After: (\d+)/)?.[1] || '0';
-                            
-                            players.push(currentPlayer);
-                            currentPlayer = null;
-                        }
-                    });
-                    
-                    // Add the last player if exists
-                    if (currentPlayer) players.push(currentPlayer);
-                    
-                    // Add players to the run
-                    logsByDate[dateKey].runs[runTimeText] = players;
-                }
-            });
-            
-            // Now generate the grouped UI
-            groupedLogs.innerHTML = '';
-            
-            // Sort dates from newest to oldest
-            const sortedDates = Object.keys(logsByDate).sort((a, b) => {
-                return new Date(b) - new Date(a);
-            });
-            
-            sortedDates.forEach(dateKey => {
-                const dateGroup = logsByDate[dateKey];
-                const date = dateGroup.date;
-                
-                // Format date string
-                const formattedDate = date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    weekday: 'long'
-                });
-                
-                // Count total players for this date
-                let totalPlayers = 0;
-                Object.values(dateGroup.runs).forEach(players => {
-                    totalPlayers += players.length;
-                });
-                
-                // Create date group container
-                const dateGroupElement = document.createElement('div');
-                dateGroupElement.className = 'date-group';
-                
-                // Create date header
-                const dateHeader = document.createElement('div');
-                dateHeader.className = 'date-header';
-                dateHeader.innerHTML = `
-                    <div class="date-title">${formattedDate}</div>
-                    <div class="date-count">${totalPlayers} accounts</div>
-                `;
-                
-                // Create players container
-                const playersContainer = document.createElement('div');
-                playersContainer.className = 'players-container';
-                
-                // Add players for each run
-                Object.entries(dateGroup.runs).forEach(([runTime, players]) => {
-                    players.forEach(player => {
-                        const playerCard = document.createElement('div');
-                        playerCard.className = 'player-card';
-                        playerCard.innerHTML = `
-                            <div class="player-name"><i class="fas fa-user"></i> ${player.name}</div>
-                            <div class="player-likes">
-                                <span>Likes Given:</span>
-                                <span class="likes-count">${player.likes}</span>
-                            </div>
-                            <div class="log-details">
-                                <div class="detail-row">
-                                    <div class="detail-label">Run Time:</div>
-                                    <div class="detail-value">${runTime}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">UID:</div>
-                                    <div class="detail-value">${player.uid} (${player.server})</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Status:</div>
-                                    <div class="detail-value"><span class="success-badge">${player.status === 'success' ? 'Success' : 'Failed'}</span></div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Likes:</div>
-                                    <div class="detail-value">
-                                        <div class="before-after">
-                                            <div>
-                                                <div class="ba-label">Before</div>
-                                                <div class="ba-value">${player.before}</div>
-                                            </div>
-                                            <div>
-                                                <div class="ba-label">After</div>
-                                                <div class="ba-value">${player.after}</div>
-                                            </div>
-                                        </div>
+    <!-- Particle background effect -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-fire logo-icon"></i>
+                <h1>7xLike - Daily Activity Logs</h1>
+            </div>
+            <p class="subtitle">Track your Free Fire daily likes activity</p>
+        </header>
+
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Accounts</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">396</div>
+                <div class="stat-label">Likes Today</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">99.8%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <!-- Only showing the 10 most recent logs -->
+        <div class="date-group">
+            <div class="date-header" onclick="toggleDetails(this)">
+                <div class="date-title"><i class="fas fa-calendar-day"></i> June 9, 2025 (Monday)</div>
+                <div class="date-count">5 accounts</div>
+            </div>
+            <div class="players-container">
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-crown"></i> BLACK FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">651948621 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">20616</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">20715</div>
                                     </div>
                                 </div>
                             </div>
-                        `;
-                        
-                        // Add click event to toggle details
-                        playerCard.addEventListener('click', function() {
-                            const details = this.querySelector('.log-details');
-                            details.style.display = details.style.display === 'block' ? 'none' : 'block';
-                        });
-                        
-                        playersContainer.appendChild(playerCard);
-                    });
-                });
+                        </div>
+                    </div>
+                </div>
                 
-                // Assemble the date group
-                dateGroupElement.appendChild(dateHeader);
-                dateGroupElement.appendChild(playersContainer);
-                groupedLogs.appendChild(dateGroupElement);
-            });
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-shield-alt"></i> BLADE FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">661067880 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">16823</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">16922</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-crosshairs"></i> FREEDOM EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">1830656132 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">4279</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">4378</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-bomb"></i> BLAST FF EXE</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">1322681052 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">2756</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">2855</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card" onclick="togglePlayerDetails(this)">
+                    <div class="player-name"><i class="fas fa-heart"></i> SWEETY FF</div>
+                    <div class="player-likes">
+                        <span>Likes Given:</span>
+                        <span class="likes-count">99</span>
+                    </div>
+                    <div class="log-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Run Time:</div>
+                            <div class="detail-value">2025-06-09 22:17:20</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">UID:</div>
+                            <div class="detail-value">1852957153 (IND)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Status:</div>
+                            <div class="detail-value"><span class="success-badge">Success</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Likes:</div>
+                            <div class="detail-value">
+                                <div class="before-after">
+                                    <div>
+                                        <div class="ba-label">Before</div>
+                                        <div class="ba-value">3011</div>
+                                    </div>
+                                    <div>
+                                        <div class="ba-label">After</div>
+                                        <div class="ba-value">3110</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>7xLike - Free Fire Daily Likes System | Last Updated: June 10, 2025</p>
+            <p>All data is securely stored and processed | Showing 10 most recent logs</p>
+        </div>
+    </div>
+
+    <script>
+        // Create particle background effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random animation duration
+                particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
         }
         
-        // Set current date in footer
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+        function togglePlayerDetails(element) {
+            const details = element.querySelector('.log-details');
+            const isOpening = details.style.display !== 'block';
+            
+            details.style.display = isOpening ? 'block' : 'none';
+            
+            // Close other open details when opening a new one
+            if (isOpening) {
+                const allDetails = document.querySelectorAll('.log-details');
+                allDetails.forEach(detail => {
+                    if (detail !== details) {
+                        detail.style.display = 'none';
+                    }
+                });
+            }
+        }
+        
+        function toggleDetails(element) {
+            const playersContainer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            const isOpening = playersContainer.style.display !== 'grid';
+            
+            playersContainer.style.display = isOpening ? 'grid' : 'none';
+            icon.style.transform = isOpening ? 'rotate(90deg)' : 'rotate(0)';
+        }
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Transform the logs on page load
-            transformLogs();
+            // Create particle background
+            createParticles();
             
-            // Hide the original log container
-            document.querySelector('.log-container').style.display = 'none';
+            // Close all details panels initially
+            document.querySelectorAll('.log-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // Add hover effect to all player cards
+            document.querySelectorAll('.player-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+            });
         });
     </script>
 </body>
