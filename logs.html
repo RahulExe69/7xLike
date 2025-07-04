@@ -1,134 +1,175 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>7xLike - Daily Activity Logs</title>
-<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Oxanium','Segoe UI',Tahoma,sans-serif;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>7xLike - Daily Activity Logs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    /* —— RESET & BASE —— */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Oxanium','Segoe UI',Tahoma,sans-serif; }
     body {
       background: linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.9)),
         url('https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/202210/2729a4b3815b0d10740e5e0e54528a4d.jpg')
         center/cover no-repeat fixed;
-      color: #f0f0f0; min-height: 100vh;
-      padding: 20px; display: flex;
-      flex-direction: column; align-items: center;
-      overflow-x: hidden;
+      color: #f0f0f0; min-height: 100vh; padding: 20px;
+      display: flex; flex-direction: column; align-items: center; overflow-x: hidden;
     }
-    .particles {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%; z-index: -1;
-      pointer-events: none;
-    }
+
+    /* —— PARTICLES —— */
+    .particles { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none; }
     .particle {
-      position: absolute; width: 2px; height: 2px;
-      background: rgba(255,215,0,0.5); border-radius:50%;
-      animation: float 8s infinite linear;
+      position: absolute; width:2px; height:2px; background:rgba(255,215,0,0.5);
+      border-radius:50%; animation: float 8s infinite linear;
     }
     @keyframes float {
-      0% {transform: translateY(0) translateX(0); opacity:1}
-      100% {transform: translateY(-100vh) translateX(20px); opacity:0}
+      0% { transform: translateY(0) translateX(0); opacity:1 }
+      100% { transform: translateY(-100vh) translateX(20px); opacity:0 }
     }
-    .container {
-      max-width:1200px; width:100%; margin:0 auto; position:relative; z-index:1;
-    }
-    header {
-      text-align:center; padding:20px 0; margin-bottom:30px;
-      animation: slideDown 0.8s ease-out;
-    }
+
+    /* —— HEADER —— */
+    .container { max-width:1200px; width:100%; margin:0 auto; position:relative; z-index:1; }
+    header { text-align:center; padding:20px 0; margin-bottom:30px; animation: slideDown 0.8s ease-out; }
     @keyframes slideDown {
-      0% {transform: translateY(-100px); opacity:0}
-      100% {transform: translateY(0); opacity:1}
+      0% { transform: translateY(-100px); opacity:0 }
+      100% { transform: translateY(0); opacity:1 }
     }
-    .logo {
-      display:flex; align-items:center; justify-content:center; gap:15px;
-      margin-bottom:15px;
-    }
+    .logo { display:flex; align-items:center; justify-content:center; gap:15px; margin-bottom:15px; }
     .logo-icon {
       font-size:2.8rem; color:#FFD700; text-shadow:0 0 10px rgba(255,215,0,0.7);
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
-      0%,100% {transform:scale(1); text-shadow:0 0 10px rgba(255,215,0,0.7)}
-      50% {transform:scale(1.1); text-shadow:0 0 20px rgba(255,215,0,0.9)}
+      0%,100% { transform:scale(1); text-shadow:0 0 10px rgba(255,215,0,0.7) }
+      50% { transform:scale(1.1); text-shadow:0 0 20px rgba(255,215,0,0.9) }
     }
     h1 {
       font-size:2.5rem; text-transform:uppercase; letter-spacing:3px;
       background:linear-gradient(to right,#FFD700,#FF8C00);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
       margin-bottom:5px;
     }
     .subtitle { font-size:1.1rem; color:#aaa; margin-bottom:25px; }
 
-    /* —— DYNAMIC LOGS CONTAINER —— */
+    /* —— LOGS CONTAINER —— */
     .log-container {
-      background: rgba(20,20,35,0.85);
-      border-radius:12px; padding:20px; margin-bottom:30px;
-      border:1px solid rgba(255,215,0,0.3);
-      box-shadow:0 5px 15px rgba(0,0,0,0.5);
-      width:100%; backdrop-filter:blur(5px);
+      background: rgba(20,20,35,0.85); border-radius:12px; padding:20px;
+      margin-bottom:30px; border:1px solid rgba(255,215,0,0.3);
+      box-shadow:0 5px 15px rgba(0,0,0,0.5); width:100%; backdrop-filter:blur(5px);
       animation: fadeIn 1s ease-out;
     }
-    .log-container h2 {
-      color:#FFD700; text-align:center; margin-bottom:15px;
-      font-weight:600;
-    }
-    #logs-content { /* placeholder for update_logs.py */ }
-    .log-entry {
-      border-left:4px solid #FFD700; background:#1e1e1e;
-      padding:10px; margin-bottom:15px; color:#f0f0f0;
-    }
-    .log-date { font-weight:bold; color:#FFD700; }
-    .log-details { margin-top:8px; line-height:1.4; }
-    .success { color:#00FF00; }
-    .error   { color:#FF4500; }
-    .player-info {
-      margin-top:8px; padding-left:15px; border-left:2px solid #555;
-    }
     @keyframes fadeIn {
-      0% {opacity:0; transform: translateY(20px)}
-      100% {opacity:1; transform: translateY(0)}
+      0% { opacity:0; transform: translateY(20px) }
+      100% { opacity:1; transform: translateY(0) }
+    }
+    .log-container h2 {
+      color:#FFD700; text-align:center; margin-bottom:15px; font-weight:600;
+    }
+
+    /* —— LOG ENTRY —— */
+    .log-entry {
+      position: relative;
+      border-left:4px solid #FFD700; background:#1e1e1e;
+      padding:12px 14px; margin-bottom:15px; color:#f0f0f0;
+      animation: slideUp 0.6s ease-out;
+      transition: all 0.3s ease;
+    }
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(15px) }
+      100% { opacity: 1; transform: translateY(0) }
+    }
+    .log-entry:hover {
+      box-shadow: 0 0 15px rgba(255,215,0,0.4);
+      transform: scale(1.02);
+    }
+    .log-date {
+      font-weight:bold; color:#FFD700;
+      text-shadow:0 0 8px rgba(255,215,0,0.6);
+    }
+    .log-details { margin-top:8px; line-height:1.4; }
+    .player-info { margin-top:8px; padding-left:15px; border-left:2px solid #555; }
+
+    /* —— LOG TYPES ICONS —— */
+    .log-entry.success .log-date::before {
+      content: "\f058"; /* fa-check-circle */
+      font-family: "Font Awesome 6 Free"; font-weight:900;
+      margin-right:8px; color:#00FF00;
+    }
+    .log-entry.error .log-date::before {
+      content: "\f06a"; /* fa-exclamation-circle */
+      font-family: "Font Awesome 6 Free"; font-weight:900;
+      margin-right:8px; color:#FF4500;
+    }
+
+    /* —— LOADING STATE —— */
+    .loading {
+      color: #FFD700; font-style: italic; text-align: center;
+      padding: 20px 0; animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1 }
+      50% { opacity:0.4 }
     }
   </style>
 </head>
 <body>
-<div class="particles" id="particles"></div>
-<div class="container">
-<header>
-<div class="logo">
-<i class="fas fa-fire logo-icon"></i>
-<h1>7xLike - Daily Activity Logs</h1>
-</div>
-<p class="subtitle">Track your Free Fire daily likes activity</p>
-</header>
-<div class="log-container">
-<h2>Recent Activity</h2>
-<div id="logs-content"><!-- update_logs.py injects here --><div class="log-entry"><div class="log-date">Run Time: 2025-07-04 23:53:53</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 23236 | After: 23236</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 19308 | After: 19308</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 6734 | After: 6734</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 5201 | After: 5201</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 5451 | After: 5451</div></div></div><div class="log-entry"><div class="log-date">Run Time: 2025-07-04 23:51:17</div><div class="log-details"><div class="success">✅ UID: 651948621 (IND): Success</div><div class="player-info">Player: BLACKᅠFFᅠEXE | Likes Given: 0 | Before: 23236 | After: 23236</div><div class="success">✅ UID: 661067880 (IND): Success</div><div class="player-info">Player: BLADEㅤFFㅤEXE | Likes Given: 0 | Before: 19308 | After: 19308</div><div class="success">✅ UID: 1830656132 (IND): Success</div><div class="player-info">Player: FREEDOMㅤEXEㅤ | Likes Given: 0 | Before: 6734 | After: 6734</div><div class="success">✅ UID: 1322681052 (IND): Success</div><div class="player-info">Player: BLASTㅤFFㅤEXE | Likes Given: 0 | Before: 5201 | After: 5201</div><div class="success">✅ UID: 1852957153 (IND): Success</div><div class="player-info">Player: SWEETYㅤFFᅠﾠ | Likes Given: 0 | Before: 5451 | After: 5451</div></div></div></div>
-</div>
-</div>
-<script>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <i class="fas fa-fire logo-icon"></i>
+        <h1>7xLike - Daily Activity Logs</h1>
+      </div>
+      <p class="subtitle">Track your Free Fire daily likes activity</p>
+    </header>
+
+    <div class="log-container">
+      <h2>Recent Activity</h2>
+      <div id="logs-content">
+        <div class="loading">Loading logs...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
     // Particle background
     function createParticles() {
       const container = document.getElementById('particles');
-      for (let i=0; i<50; i++) {
+      for (let i = 0; i < 50; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
-        p.style.left = Math.random()*100 + '%';
-        p.style.top  = Math.random()*100 + '%';
-        const size = Math.random()*3 + 1;
-        p.style.width = size+'px'; p.style.height = size+'px';
-        p.style.animationDuration = (Math.random()*10 + 5)+'s';
-        p.style.animationDelay    = Math.random()*5+'s';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top  = Math.random() * 100 + '%';
+        const size = Math.random() * 3 + 1;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.animationDuration = (Math.random() * 10 + 5) + 's';
+        p.style.animationDelay    = Math.random() * 5 + 's';
         container.appendChild(p);
       }
     }
     document.addEventListener('DOMContentLoaded', createParticles);
+
+    // Simulated log fetch & render (replace with your update_logs.py injection)
+    setTimeout(() => {
+      const logs = [
+        { date: '2025-07-04 19:56', details: 'Liked player XYZ', type: 'success' },
+        { date: '2025-07-04 18:20', details: 'Failed to like player ABC', type: 'error' },
+        // …more entries
+      ];
+      const container = document.getElementById('logs-content');
+      container.innerHTML = ''; // clear loading
+      logs.forEach(log => {
+        const entry = document.createElement('div');
+        entry.className = `log-entry ${log.type}`;
+        entry.innerHTML = `
+          <div class="log-date">${log.date}</div>
+          <div class="log-details">${log.details}</div>
+        `;
+        container.appendChild(entry);
+      });
+    }, 1200);
   </script>
 </body>
 </html>
