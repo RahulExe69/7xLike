@@ -140,8 +140,8 @@ def update_logs_html():
     
     # Limit to 30 entries to keep the file size reasonable
     entries = logs_content.find_all("div", class_="log-entry")
-    if len(entries) > 30:
-        for i in range(30, len(entries)):
+    if len(entries) > 10:
+        for i in range(10, len(entries)):
             entries[i].decompose()
     
     # Save the updated HTML
