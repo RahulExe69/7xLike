@@ -31,7 +31,7 @@ os.makedirs("logs", exist_ok=True)
 def send_likes(uid, server_name):
     """Send likes to a specific UID using the deployed API"""
     try:
-        api_url = f"{API_BASE_URL}?uid={uid}&region={server_name}"
+        api_url = f"{API_BASE_URL}?uid={uid}&server_name={server_name}"
         logger.info(f"Sending likes to UID {uid} on server {server_name}")
         logger.info(f"API URL: {api_url}")
         
